@@ -1,4 +1,5 @@
 import React from 'react';
+import MarkerData from './MarkerData';
 
 class ApiControl extends React.Component {
 
@@ -22,14 +23,18 @@ class ApiControl extends React.Component {
     // console.log(this.state.treeData)
   }
 
+  componentDidMount(){
+    this.handleApiRequest();
+  }
+
   render(){
 
 
     return (
 
       <div>
-        {this.handleApiRequest}
         <h1>Api Works</h1>
+        <MarkerData apiResponse={this.state.treeData} />
       </div>
     )
   }
