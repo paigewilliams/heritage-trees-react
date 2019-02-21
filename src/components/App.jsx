@@ -13,6 +13,7 @@ const GlobalStyles = createGlobalStyle`
 
 
 function App(){
+
   return (
     <div>
       <GlobalStyles />
