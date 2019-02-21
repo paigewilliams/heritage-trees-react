@@ -1,5 +1,6 @@
 import React from 'react';
 import MarkerData from './MarkerData';
+import { Marker } from 'google-maps-react';
 
 class ApiControl extends React.Component {
 
@@ -20,7 +21,6 @@ class ApiControl extends React.Component {
         treeData: data.features
       })
     })
-    // console.log(this.state.treeData)
   }
 
   componentDidMount(){
@@ -28,14 +28,13 @@ class ApiControl extends React.Component {
   }
 
   render(){
-
-
     return (
+        {this.state.treeData.map((marker) =>
+          <Marker title={marker.properties.COMMON}
+            position={{lat: marker.geometry.coordinates[1], lng: marker.geometry.coordinates[0]}}
+             />
+        )}
 
-      <div>
-        <h1>Api Works</h1>
-        <MarkerData apiResponse={this.state.treeData} />
-      </div>
     )
   }
 

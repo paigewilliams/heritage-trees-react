@@ -1,6 +1,6 @@
 import React from 'react';
 import MapContainer from './MapContainer';
-
+import ApiControl from './ApiControl';
 
 
 
@@ -9,6 +9,7 @@ function Map(){
     <div>
       <h1>Map works</h1>
       <MapContainer / >
+       
     </div>
   )
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import Map from './Map';
-import ApiControl from './ApiControl';
 import { Switch, Route } from 'react-router';
 import { createGlobalStyle } from "styled-components";
 
@@ -20,7 +19,6 @@ function App(){
       <GlobalStyles />
       <Switch>
         <Route exact path='/' component={Map} />
-        <Route path='/api' component={ApiControl} />
       </Switch>
     </div>
   );
