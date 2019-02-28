@@ -1,15 +1,16 @@
 import React from 'react';
 import MapContainer from './MapContainer';
-import ApiControl from './ApiControl';
 
 
 
-function Map(){
+
+function Map(props){
+  
   return(
     <div>
       <h1>Map works</h1>
-      <MapContainer / >
-       
+      <MapContainer treeData={props.treeData} />
+
     </div>
   )
 }
