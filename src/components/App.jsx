@@ -1,7 +1,9 @@
 import React from "react";
 import Map from './Map';
-import { Switch, Route } from 'react-router';
 import { createGlobalStyle } from "styled-components";
+import { fetchTreeData } from './../actions';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 
 const GlobalStyles = createGlobalStyle`
@@ -11,31 +13,18 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-class App extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      treeData: []
-    };
-    this.handleApiRequest = this.handleApiRequest.bind(this);
-  }
+function App({ dispatch }){
 
-
-
-  componentDidMount(){
-    this.handleApiRequest();
-  }
-
-  render(){
-    return (
-      <div>
-        <GlobalStyles />
-        <Switch>
-          <Route exact path='/' render={()=> <Map treeData={this.state.treeData} />}  />
-        </Switch>
-      </div>
-    );
-  }
+  return (
+    <div>
+      {dispatch(fetchTreeData())}
+      <GlobalStyles />
+    </div>
+  );
 }
 
-export default App;
+App.propTypes = {
+  dispatch: PropTypes.func
+};
+
+export default connect()(App);

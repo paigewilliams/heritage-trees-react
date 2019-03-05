@@ -1,4 +1,8 @@
 import rootReducer from './../../src/reducers/index';
+import getTreeDataReducer from './../../src/reducers/getTreeData';
+import { createStore } from 'redux';
+
+let store = createStore(rootReducer);
 
 describe("rootReducer", () => {
 
@@ -7,4 +11,9 @@ describe("rootReducer", () => {
       masterTreeData: {}
     });
   });
+
+  test('Should contain getTreeDataReducer logic', () => {
+    expect(store.getState().masterTreeData).toEqual(getTreeDataReducer(undefined, {type: null}));
+  });
+
 });
