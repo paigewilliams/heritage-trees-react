@@ -4,11 +4,8 @@ export default(state = {}, action) => {
   let newMasterTreeData;
   switch (action.type){
   case types.REQUEST_DATA:
-    newMasterTreeData = {
-      isFetching: true,
-      treeData: action.treeData
-    };
-    newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData
+    newMasterTreeData = action.treeData
+     let newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData
     );
     return newTreeDataStateSlice;
   default:
