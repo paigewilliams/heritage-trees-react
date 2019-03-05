@@ -20,18 +20,7 @@ class App extends React.Component{
     this.handleApiRequest = this.handleApiRequest.bind(this);
   }
 
-  handleApiRequest(){
-    const url = `https://opendata.arcgis.com/datasets/fd1d618ac3174ad5be730524a4dd778e_26.geojson`;
-    fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data.features)
-      const newTreeData = data.features;
-      this.setState({
-        treeData: newTreeData
-      })
-    })
-  }
+
 
   componentDidMount(){
     this.handleApiRequest();
