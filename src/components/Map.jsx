@@ -9,7 +9,7 @@ function Map(props){
       <MapContainer treeData={props.treeData} />
 
     </div>
-  )
+  );
 }
 
 export default Map;

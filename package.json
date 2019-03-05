@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server",
-    "lint": "eslint src/** src/**/**; exit 0"
+    "lint": "eslint src/** src/**/**; exit 0",
+    "lint-fix": "eslint src/** src/**/** --fix; exit 0"
   },
   "author": "paige williams && devin sweeting",
   "license": "ISC",
@@ -33,7 +34,7 @@
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-plugin-styled-components": "^1.10.0",
-    "eslint": "^5.13.0",
+    "eslint": "^4.13.1",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-react": "^7.12.4",
     "file-loader": "^1.1.6",

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import Map from './Map';
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 import { fetchTreeData } from './../actions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
