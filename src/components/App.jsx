@@ -1,5 +1,5 @@
 import React from 'react';
-import Map from './Map';
+import MapContainer from './MapContainer';
 import { createGlobalStyle } from 'styled-components';
 import { fetchTreeData } from './../actions';
 import PropTypes from 'prop-types';
@@ -12,19 +12,42 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Lato', sans-serif;
   }
 `;
+export class App extends React.Component{
+  constructor(props){
+    super(props);
+    const { dispatch } = props;
+    dispatch(fetchTreeData())
+  }
 
-function App({ dispatch }){
+  // componentDidMount(){
+  //   console.log('in app')
+  //   dispatch(fetchTreeData());
+  // }
 
-  return (
-    <div>
-      {dispatch(fetchTreeData())}
-      <GlobalStyles />
-    </div>
-  );
+  render(){
+    let renderedContent;
+    if (this.props.treeData['0']) {
+      console.log('in condition')
+      renderedContent = <MapContainer treeData={this.props.treeData} />
+    }
+    return (
+      <div>
+        <GlobalStyles />
+        <h1>Hello</h1>
+        {renderedContent}
+      </div>
+    );
+  }
 }
 
 App.propTypes = {
   dispatch: PropTypes.func
 };
 
-export default connect()(App);
+const mapStateToProps = state => {
+  return {
+    treeData: state.masterTreeData
+  }
+}
+
+export default connect(mapStateToProps)(App);
