@@ -5,6 +5,11 @@ export const requestTreeData = (treeData) => ({
   treeData: treeData
 });
 
+export const requestCoords = (coords) => ({
+  type: types.GET_COORDS,
+  coords: coords
+})
+
 
 export function fetchTreeData(){
   return function(dispatch) {
@@ -12,7 +17,18 @@ export function fetchTreeData(){
       error => console.log('An error occurred', error))
       .then((json) => {
         const newTreeData = json.features;
-        dispatch(requestTreeData(newTreeData))
+        dispatch(requestTreeData(newTreeData));
       });
+  };
+}
+
+export function fetchCoords(address){
+  return function(dispatch){
+    return fetch('https://maps.googleapis.com/maps/api/geocode/json?address' + address + '&key=process.env.GOOGLE_MAPS_API').then((response) => response.json(),
+    error => console.log('An error occorred', error))
+    .then((json) => {
+      const newCoords = json.geometry.location;
+      dispatch(requestCoords(newCoords));
+    });
   };
 }

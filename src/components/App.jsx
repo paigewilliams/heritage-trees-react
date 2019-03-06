@@ -19,10 +19,6 @@ export class App extends React.Component{
     dispatch(fetchTreeData())
   }
 
-  // componentDidMount(){
-  //   console.log('in app')
-  //   dispatch(fetchTreeData());
-  // }
 
   render(){
     let renderedContent;
