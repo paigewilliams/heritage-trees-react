@@ -1,9 +1,11 @@
 import React from 'react';
 import MapContainer from './MapContainer';
+import AddressForm from './AddressForm';
 import { createGlobalStyle } from 'styled-components';
 import { fetchTreeData } from './../actions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from 'styled-components'
 
 
 const GlobalStyles = createGlobalStyle`
@@ -11,12 +13,25 @@ const GlobalStyles = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Lato');
     font-family: 'Lato', sans-serif;
   }
+
 `;
+
+const BodyStyles = styled.div`
+
+`
+
+const MapContainerStyles = styled.div`
+  width: 50%;
+  height: 50%;
+  margin-top: 200px;
+  margin-left: 300px;
+`
+
 export class App extends React.Component{
   constructor(props){
     super(props);
     const { dispatch } = props;
-    dispatch(fetchTreeData())
+    dispatch(fetchTreeData());
   }
 
 
@@ -27,11 +42,17 @@ export class App extends React.Component{
       renderedContent = <MapContainer treeData={this.props.treeData} />
     }
     return (
-      <div>
+      <BodyStyles>
         <GlobalStyles />
-        <h1>Hello</h1>
-        {renderedContent}
-      </div>
+        <MapContainerStyles>
+          {renderedContent}
+        </MapContainerStyles>
+        <div>
+          <AddressForm />
+        </div>
+
+
+      </BodyStyles>
     );
   }
 }
@@ -42,7 +63,7 @@ App.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    treeData: state.masterTreeData
+    treeData: state.treeData
   }
 }
 

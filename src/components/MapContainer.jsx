@@ -3,8 +3,9 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { connect } from 'react-redux';
 
 const style = {
-  width: '100%',
-  height: '100%'
+  width: '500px',
+  height: '500px',
+  position: 'relative'
 };
 
 export class MapContainer extends React.Component {
