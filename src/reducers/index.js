@@ -3,7 +3,7 @@ import getCoordsReducer from './getCoords';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-  masterTreeData: getTreeDataReducer,
+  treeData: getTreeDataReducer,
   currentCoords: getCoordsReducer
 });
 

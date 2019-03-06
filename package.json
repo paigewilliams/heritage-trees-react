@@ -4,7 +4,7 @@
   "description": "app to try google maps with react",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest; exit 0",
     "start": "webpack-dev-server",
     "lint": "eslint src/** src/**/**; exit 0",
     "lint-fix": "eslint src/** src/**/** --fix; exit 0"

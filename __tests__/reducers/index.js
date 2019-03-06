@@ -2,21 +2,24 @@ import rootReducer from './../../src/reducers/index';
 import getTreeDataReducer from './../../src/reducers/getTreeData';
 import getCoordsReducer from './../../src/reducers/getCoords';
 import { createStore } from 'redux';
+import constants from './../../src/constants';
 import * as actions from './../../src/actions';
 
 let store = createStore(rootReducer);
+const { initialState, types } = constants;
+
 
 describe("rootReducer", () => {
 
   test('Should return default state if no action type is recognized', () => {
     expect(rootReducer({}, {type: null})).toEqual({
-      masterTreeData: {},
+      treeData: {},
       currentCoords: {}
     });
   });
 
   test('Should contain getTreeDataReducer logic', () => {
-    expect(store.getState().masterTreeData).toEqual(getTreeDataReducer(undefined, {type: null}));
+    expect(store.getState().treeData).toEqual(getTreeDataReducer(undefined, {type: null}));
   });
 
   test('Should return deault state if no action type is recognized', () => {
@@ -29,7 +32,6 @@ describe('getTreeDataReducer', () => {
   it('Should updated state when API data is requested', () => {
     const action = actions.requestTreeData();
     const newStateEntry = {
-      isFetching: true,
       treeData: action.treeData
     };
     expect(getTreeDataReducer(initialState.treeData, action)).toEqual(newStateEntry);
@@ -38,11 +40,17 @@ describe('getTreeDataReducer', () => {
 
 describe('getCoordsReducer', () => {
   it('Should update state when API data is requested', () => {
-    const action = actions.requestCoords();
+    const testCoords = {
+      lat: 45.520852,
+      lng: -122.677377
+    }
+
+    const action = actions.requestCoords(testCoords);
+    console.log(action);
     const newStateEntry = {
-      isRecieved: true,
-      coords: action.coords
+      lat: action.lat,
+      lng: action.lng
     };
-    expect(getCoordsReducer(initialState.coords, action)).toEqual(newStateEntry);
+    expect(getCoordsReducer(initialState.currentCoords, action)).toEqual(newStateEntry);
   });
-})
+});

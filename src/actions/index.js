@@ -5,9 +5,10 @@ export const requestTreeData = (treeData) => ({
   treeData: treeData
 });
 
-export const requestCoords = (coords) => ({
+export const requestCoords = ({ lat, lng }) => ({
   type: types.GET_COORDS,
-  coords: coords
+  lat: lat,
+  lng: lng
 })
 
 
