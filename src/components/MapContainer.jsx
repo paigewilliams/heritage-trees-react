@@ -29,7 +29,6 @@ export class MapContainer extends React.Component {
 
 
   render(){
-    console.log(this.props)
     return (
       <Map
         google={this.props.google}

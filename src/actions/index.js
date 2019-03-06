@@ -24,15 +24,11 @@ export function fetchTreeData(){
 }
 
 export function fetchCoords(address){
-  console.log(address);
   return function(dispatch){
-    return fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=process.env.GEO_API').then((response) => response.json(),
+    return fetch('https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key='+process.env.GOOGLE_MAPS_API).then((response) => response.json(),
     error => console.log('An error occorred', error))
     .then((json) => {
-      const newCoords = json.geometry;
-      const results = json.results;
-      console.log(json);
-      console.log(results, 'results');
+      const newCoords = json.results[0].geometry.location;
       dispatch(requestCoords(newCoords));
     });
   };
