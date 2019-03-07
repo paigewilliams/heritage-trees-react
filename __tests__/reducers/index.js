@@ -36,6 +36,14 @@ describe('getTreeDataReducer', () => {
     };
     expect(getTreeDataReducer(initialState.treeData, action)).toEqual(newStateEntry);
   });
+
+  it('Should filter tree data based on location', () => {
+    const action = actions.filterData();
+    const newStateEntry = {
+      treeData: action.filteredTreeData
+    };
+    expect(getTreeDataReducer(initialState.treeData, action)).toEqual(newStateEntry);
+  });
 });
 
 describe('getCoordsReducer', () => {

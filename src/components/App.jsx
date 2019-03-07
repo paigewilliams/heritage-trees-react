@@ -35,10 +35,11 @@ export class App extends React.Component{
   }
 
 
+
+
   render(){
     let renderedContent;
-    if (this.props.treeData['0']) {
-      console.log('in condition')
+    if (this.props.treeData !== {}) {
       renderedContent = <MapContainer treeData={this.props.treeData} />
     }
     return (
@@ -63,7 +64,8 @@ App.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    treeData: state.treeData
+    treeData: state.treeData,
+    currentCoords: state.currentCoords
   }
 }
 
