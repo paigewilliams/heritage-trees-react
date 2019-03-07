@@ -40,14 +40,36 @@ In __tests__/reducers/index.js
 In src/constants/InitialState.js.
 
 13. Write test to assign inputted data.
+In __tests__/reducers/index.js
 
 14. Write reducer logic to make tests pass.
+In src/reducers/index.js
 
 15. Run tests.
 
 16. Create AddressForm component with logic to gather input.
+In src/components/AddressForm.jsx
 
-17. Import action to call API in AddressForm
+17. Import action to call API in AddressForm.
+In src/components/AddressForm.jsx
+
+18. Import AddressForm into App and make it a child component.
+In src/components/App.jsx
+
+19. Dispatch fetchCoords in AddressForm component.
+In src/components/AddressForm.jsx
+
+20. Create regex for AddressForm input.
+In src/components/AddressForm.jsx
+
+21. Parse JSON response.
+In src/actions/index.js
+```
+const newCoords = json.results[0].geometry.location;
+```
+
+22. Debug Google Maps API key
+
 
 ## The Detailed list
 1. Define actionType constant. The thought process here might be, "What am I trying to accomplish?"
@@ -77,7 +99,7 @@ An action can also have other data. The GET_COORDS action has treeData in additi
 ```
 {
   type: 'GET_COORDS',
-  treeData:
+  treeData: treeData
 }
 ```
 
@@ -113,7 +135,7 @@ export function fetchCoords(address){
 
 5. Parse JSON response.
 
-6. Create a reducer.
+6. Create a new reducer to handle this action.
 In src/reducers/getCoords.js write:
 ```
 export default( state = {}, action) => {
@@ -133,4 +155,17 @@ export default( state = {}, action) => {
 };
 ```
 
+7. Add the new reducer to the rootReducer.
+In src/reducers/index.js add this to the top of the file:
+```
+import getCoordsReducer from './getCoords';
+```
+
+And the rootReducer will now look like this:
+```
+const rootReducer = combineReducers({
+  treeData: getTreeDataReducer,
+  currentCoords: getCoordsReducer
+});
+```
 
