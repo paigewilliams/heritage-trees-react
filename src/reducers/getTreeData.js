@@ -2,12 +2,18 @@ import * as types from './../constants/ActionTypes';
 
 export default(state = {}, action) => {
   let newMasterTreeData;
+  let newTreeDataStateSlice;
   switch (action.type){
   case types.REQUEST_DATA:
     newMasterTreeData = action.treeData
-     let newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData
+    newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData
     );
     return newTreeDataStateSlice;
+  case types.FILTER_DATA:
+    newMasterTreeData = action.filteredTreeData
+    state = {}
+    newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData);
+    return newTreeDataStateSlice
   default:
     return state;
   }

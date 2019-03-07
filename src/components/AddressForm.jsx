@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchCoords } from './../actions';
+import { fetchCoords, findTreesWithinAMile } from './../actions';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
@@ -8,14 +8,14 @@ const FormStyles = styled.div`
 `
 
 
-function AddressForm({ dispatch }){
+function AddressForm({ dispatch, treeData, currentCoords }){
   let _address = null;
+
   function handleNewAddressFormSubmission(event){
     event.preventDefault();
     const formattedAddress = _address.value.replace(/\s/g, '+');
-    console.log(formattedAddress);
-    dispatch(fetchCoords(formattedAddress));
-    }
+    dispatch(fetchCoords(formattedAddress, treeData));
+  }
 
 
   return(
@@ -32,4 +32,11 @@ function AddressForm({ dispatch }){
   );
 }
 
-export default connect()(AddressForm);
+const mapStateToProps = state => {
+  return {
+    treeData: state.treeData,
+    currentCoords: state.currentCoords
+  }
+}
+
+export default connect(mapStateToProps)(AddressForm);
