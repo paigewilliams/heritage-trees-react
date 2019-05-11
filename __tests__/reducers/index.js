@@ -1,6 +1,5 @@
 import rootReducer from './../../src/reducers/index';
 import getTreeDataReducer from './../../src/reducers/getTreeData';
-import getCoordsReducer from './../../src/reducers/getCoords';
 import { createStore } from 'redux';
 import constants from './../../src/constants';
 import * as actions from './../../src/actions';
@@ -12,18 +11,18 @@ const { initialState, types } = constants;
 describe("rootReducer", () => {
 
   test('Should return default state if no action type is recognized', () => {
-    expect(rootReducer({}, {type: null})).toEqual({
+    expect(rootReducer({}, { type: null })).toEqual({
       treeData: {},
       currentCoords: {}
     });
   });
 
   test('Should contain getTreeDataReducer logic', () => {
-    expect(store.getState().treeData).toEqual(getTreeDataReducer(undefined, {type: null}));
+    expect(store.getState().treeData).toEqual(getTreeDataReducer(undefined, { type: null }));
   });
 
   test('Should return deault state if no action type is recognized', () => {
-    expect(store.getState().currentCoords).toEqual(getCoordsReducer(undefined, {type: null}));
+    expect(store.getState().currentCoords).toEqual(getCoordsReducer(undefined, { type: null }));
   });
 
 });
