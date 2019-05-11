@@ -28,7 +28,7 @@ export const fetchTreeData = () => dispatch => {
 export const fetchCoords = (address, treeData) => dispatch => {
   return fetch(
     /* eslint-disable no-undef */
-    'https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&key='+process.env.GOOGLE_MAPS_API
+    'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=' + process.env.GOOGLE_MAPS_API
     /* eslint-enable no-undef */
   ).then(
     response => response.json(),
@@ -44,11 +44,11 @@ export const fetchCoords = (address, treeData) => dispatch => {
 };
 
 const findTreesWithinAMile = (treeData, currentCoords, mile) => {
-  return Object.keys(treeData).reduce((all, treeId) => {
+  return Object.keys(treeData).reduce((accumulator, treeId) => {
     const tree = treeData[treeId];
     const treeCoords = { lat: tree.geometry.coordinates[1], lng: tree.geometry.coordinates[0] };
-    mathForTreesWithinAMile(treeCoords, currentCoords, mile) ? all[treeId] = tree : null;
-    return all;
+    mathForTreesWithinAMile(treeCoords, currentCoords, mile) ? accumulator[treeId] = tree : null;
+    return accumulator;
   }, {});
 };
 
