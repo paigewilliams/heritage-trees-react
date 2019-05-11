@@ -62,7 +62,7 @@ class MapContainer extends React.Component {
 }
 
 MapContainer.propTypes = {
-  google: PropTypes.func,
+  google: PropTypes.object,
   treeData: PropTypes.object
 };
 
