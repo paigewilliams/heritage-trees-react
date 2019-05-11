@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { connect } from 'react-redux';
 
 const style = {
   width: '500px',
@@ -8,8 +8,7 @@ const style = {
   position: 'relative'
 };
 
-export class MapContainer extends React.Component {
-
+class MapContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -20,13 +19,12 @@ export class MapContainer extends React.Component {
     this.onMarkerClick = this.onMarkerClick.bind(this);
   }
 
-  onMarkerClick(props, marker, e){
+  onMarkerClick(props, marker){
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });}
-
 
   render(){
     return (
@@ -39,7 +37,6 @@ export class MapContainer extends React.Component {
         }}
         zoom={12}>
         {Object.keys(this.props.treeData).map((treeId) => {
-
           let marker = this.props.treeData[treeId];
           return <Marker title={marker.properties.COMMON}
             position={{lat: marker.properties.LAT, lng: marker.properties.LON}}
@@ -64,7 +61,13 @@ export class MapContainer extends React.Component {
   }
 }
 
+MapContainer.propTypes = {
+  google: PropTypes.func,
+  treeData: PropTypes.object
+};
 
 export default GoogleApiWrapper({
+  /* eslint-disable no-undef */
   apiKey: (process.env.GOOGLE_MAPS_API)
+  /* eslint-enable no-undef */
 })(MapContainer);

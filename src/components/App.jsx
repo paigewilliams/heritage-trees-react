@@ -13,11 +13,6 @@ const GlobalStyles = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Lato');
     font-family: 'Lato', sans-serif;
   }
-
-`;
-
-const BodyStyles = styled.div`
-
 `;
 
 const MapContainerStyles = styled.div`
@@ -34,16 +29,13 @@ export class App extends React.Component{
     dispatch(fetchTreeData());
   }
 
-
-
-
   render(){
     let renderedContent;
     if (this.props.treeData !== {}) {
       renderedContent = <MapContainer treeData={this.props.treeData} />;
     }
     return (
-      <BodyStyles>
+      <div>
         <GlobalStyles />
         <MapContainerStyles>
           {renderedContent}
@@ -51,15 +43,14 @@ export class App extends React.Component{
         <div>
           <AddressForm />
         </div>
-
-
-      </BodyStyles>
+      </div>
     );
   }
 }
 
 App.propTypes = {
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  treeData: PropTypes.object
 };
 
 const mapStateToProps = state => {

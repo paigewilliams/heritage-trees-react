@@ -1,12 +1,12 @@
 import React from 'react';
-import { fetchCoords, findTreesWithinAMile } from './../actions';
+import PropTypes from 'prop-types';
+import { fetchCoords } from './../actions';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 const FormStyles = styled.div`
   z-index: 3;
 `;
-
 
 function AddressForm({ dispatch, treeData, currentCoords }){
   let _address = null;
@@ -16,7 +16,6 @@ function AddressForm({ dispatch, treeData, currentCoords }){
     const formattedAddress = _address.value.replace(/\s/g, '+');
     dispatch(fetchCoords(formattedAddress, treeData));
   }
-
 
   return(
     <FormStyles>
@@ -37,6 +36,12 @@ const mapStateToProps = state => {
     treeData: state.treeData,
     currentCoords: state.currentCoords
   };
+};
+
+AddressForm.propTypes = {
+  dispatch: PropTypes.func,
+  treeData: PropTypes.object,
+  currentCoords: PropTypes.object
 };
 
 export default connect(mapStateToProps)(AddressForm);
