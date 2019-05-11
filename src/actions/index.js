@@ -50,22 +50,19 @@ export const fetchCoords = (address, treeData) => dispatch => {
     });
 };
 
-export function findTreesWithinAMile(treeData, currentCoords, mile) {
-
+const findTreesWithinAMile = (treeData, currentCoords, mile) => {
   return Object.keys(treeData).reduce((all, treeId) => {
     const tree = treeData[treeId];
     const treeCoords = { lat: tree.geometry.coordinates[1], lng: tree.geometry.coordinates[0] };
-    if (mathForTreesWithinAMile(treeCoords, currentCoords, mile)) {
-      all[treeId] = tree;
-    }
+    mathForTreesWithinAMile(treeCoords, currentCoords, mile) ? all[treeId] = tree : null;
     return all;
   }, {});
-}
+};
 
-export function mathForTreesWithinAMile(checkTree, centerPoint, mile) {
+const mathForTreesWithinAMile = (checkTree, centerPoint, mile) => {
   const ky = 40000 / 360;
   const kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
   const dx = Math.abs(centerPoint.lng - checkTree.lng) * kx;
   const dy = Math.abs(centerPoint.lat - checkTree.lat) * ky;
   return Math.sqrt(dx * dx + dy * dy) <= mile;
-}
+};
