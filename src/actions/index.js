@@ -5,12 +5,6 @@ export const requestTreeData = (treeData) => ({
   treeData: treeData
 });
 
-export const requestCoords = ({ lat, lng }) => ({
-  type: types.GET_COORDS,
-  lat: lat,
-  lng: lng
-});
-
 export const filterData = (filteredTreeData) => ({
   type: types.FILTER_DATA,
   filteredTreeData: filteredTreeData
@@ -45,7 +39,6 @@ export const fetchCoords = (address, treeData) => dispatch => {
     json => {
       const newCoords = json.results[0].geometry.location;
       const mile = 1.60934;
-      dispatch(requestCoords(newCoords));
       dispatch(filterData(findTreesWithinAMile(treeData, newCoords, mile)));
     });
 };
