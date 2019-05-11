@@ -31,9 +31,8 @@ export class App extends React.Component{
 
   render(){
     let renderedContent;
-    if (this.props.treeData !== {}) {
-      renderedContent = <MapContainer treeData={this.props.treeData} />;
-    }
+    this.props.treeData !== {} ? renderedContent = <MapContainer treeData={this.props.treeData} /> : null;
+
     return (
       <div>
         <GlobalStyles />
