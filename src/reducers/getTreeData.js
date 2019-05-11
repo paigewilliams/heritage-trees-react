@@ -4,17 +4,12 @@ export default (state = {}, action) => {
   let newMasterTreeData;
   let newTreeDataStateSlice;
   switch (action.type) {
-  case types.REQUEST_DATA:
-    newMasterTreeData = action.treeData;
-    newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData
-    );
-    return newTreeDataStateSlice;
-    // case types.FILTER_DATA:
-    //   newMasterTreeData = action.filteredTreeData;
-    //   state = {};
-    //   newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData);
-    //   return newTreeDataStateSlice;
-  default:
-    return state;
+    case types.REQUEST_DATA:
+      newMasterTreeData = action.treeData;
+      newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData
+      );
+      return newTreeDataStateSlice;
+    default:
+      return state;
   }
 };
