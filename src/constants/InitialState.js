@@ -4,5 +4,4 @@ export const initialState = {
     lat: 0,
     lng: 0
   }
-
-}
+};

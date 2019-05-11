@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const FormStyles = styled.div`
   z-index: 3;
-`
+`;
 
 
 function AddressForm({ dispatch, treeData, currentCoords }){
@@ -22,11 +22,11 @@ function AddressForm({ dispatch, treeData, currentCoords }){
     <FormStyles>
       <form onSubmit={handleNewAddressFormSubmission}>
         <input
-        type='text'
-        id='address'
-        placeholder='Input Address'
-        ref={(input) => {_address = input;}}/>
-      <button type='submit'>Find Trees</button>
+          type='text'
+          id='address'
+          placeholder='Input Address'
+          ref={(input) => {_address = input;}}/>
+        <button type='submit'>Find Trees</button>
       </form>
     </FormStyles>
   );
@@ -36,7 +36,7 @@ const mapStateToProps = state => {
   return {
     treeData: state.treeData,
     currentCoords: state.currentCoords
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(AddressForm);
