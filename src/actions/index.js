@@ -16,16 +16,17 @@ export const filterData = (filteredTreeData) => ({
   filteredTreeData: filteredTreeData
 });
 
-
-export function fetchTreeData(){
-  return function(dispatch) {
-    return fetch('https://opendata.arcgis.com/datasets/fd1d618ac3174ad5be730524a4dd778e_26.geojson').then((response) => response.json(),
-      error => console.log('An error occurred', error))
-      .then((json) => {
-        const newTreeData = json.features;
-        dispatch(requestTreeData(newTreeData));
-      });
-  };
+export const fetchTreeData = () => dispatch => {
+  return fetch('https://opendata.arcgis.com/datasets/fd1d618ac3174ad5be730524a4dd778e_26.geojson')
+  .then(
+    response => response.json(),
+    error => console.log('An error occured', error)
+  ).then(
+    json => {
+      const newTreeData = json.features;
+      dispatch(requestTreeData(newTreeData));
+    }
+  )
 }
 
 export function fetchCoords(address, treeData){
@@ -56,9 +57,9 @@ export function findTreesWithinAMile(treeData, currentCoords, mile) {
 }
 
 export function mathForTreesWithinAMile(checkTree, centerPoint, mile) {
-  var ky = 40000 / 360;
-  var kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
-  var dx = Math.abs(centerPoint.lng - checkTree.lng) * kx;
-  var dy = Math.abs(centerPoint.lat - checkTree.lat) * ky;
+  const ky = 40000 / 360;
+  const kx = Math.cos(Math.PI * centerPoint.lat / 180.0) * ky;
+  const dx = Math.abs(centerPoint.lng - checkTree.lng) * kx;
+  const dy = Math.abs(centerPoint.lat - checkTree.lat) * ky;
   return Math.sqrt(dx * dx + dy * dy) <= mile;
 }
