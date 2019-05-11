@@ -5,7 +5,7 @@ import { createGlobalStyle } from 'styled-components';
 import { fetchTreeData } from './../actions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 
 const GlobalStyles = createGlobalStyle`
@@ -18,14 +18,14 @@ const GlobalStyles = createGlobalStyle`
 
 const BodyStyles = styled.div`
 
-`
+`;
 
 const MapContainerStyles = styled.div`
   width: 50%;
   height: 50%;
   margin-top: 200px;
   margin-left: 300px;
-`
+`;
 
 export class App extends React.Component{
   constructor(props){
@@ -40,7 +40,7 @@ export class App extends React.Component{
   render(){
     let renderedContent;
     if (this.props.treeData !== {}) {
-      renderedContent = <MapContainer treeData={this.props.treeData} />
+      renderedContent = <MapContainer treeData={this.props.treeData} />;
     }
     return (
       <BodyStyles>
@@ -66,7 +66,7 @@ const mapStateToProps = state => {
   return {
     treeData: state.treeData,
     currentCoords: state.currentCoords
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(App);

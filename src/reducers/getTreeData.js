@@ -5,15 +5,15 @@ export default(state = {}, action) => {
   let newTreeDataStateSlice;
   switch (action.type){
   case types.REQUEST_DATA:
-    newMasterTreeData = action.treeData
+    newMasterTreeData = action.treeData;
     newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData
     );
     return newTreeDataStateSlice;
   case types.FILTER_DATA:
-    newMasterTreeData = action.filteredTreeData
-    state = {}
+    newMasterTreeData = action.filteredTreeData;
+    state = {};
     newTreeDataStateSlice = Object.assign({}, state, newMasterTreeData);
-    return newTreeDataStateSlice
+    return newTreeDataStateSlice;
   default:
     return state;
   }

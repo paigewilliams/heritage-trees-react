@@ -46,7 +46,7 @@ export class MapContainer extends React.Component {
             address={marker.properties.SITE_ADDRESS}
             year={marker.properties.YEAR_Designated}
             onClick={this.onMarkerClick}
-            key={treeId} />
+            key={treeId} />;
         }
         )}
         <InfoWindow
