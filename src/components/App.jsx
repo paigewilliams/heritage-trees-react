@@ -21,16 +21,18 @@ const MapContainerStyles = styled.div`
   margin-left: 30rem;
 `;
 
-export class App extends React.Component{
-  constructor(props){
+export class App extends React.Component {
+  constructor(props) {
     super(props);
     const { dispatch } = props;
     dispatch(fetchTreeData());
   }
 
-  render(){
+  render() {
     let renderedContent;
-    this.props.treeData !== {} ? renderedContent = <MapContainer treeData={this.props.treeData} /> : null;
+    Object.entries(this.props.treeData).length !== 0 ?
+      renderedContent = <MapContainer treeData={Object.entries(this.props.filteredTreeData).length !== 0 ? this.props.filteredTreeData : this.props.treeData} />
+      : null;
 
     return (
       <div>
@@ -51,13 +53,14 @@ export class App extends React.Component{
 
 App.propTypes = {
   dispatch: PropTypes.func,
-  treeData: PropTypes.object
+  treeData: PropTypes.object,
+  filteredTreeData: PropTypes.object,
 };
 
 const mapStateToProps = state => {
   return {
     treeData: state.treeData,
-    currentCoords: state.currentCoords
+    filteredTreeData: state.filteredTreeData
   };
 };
 

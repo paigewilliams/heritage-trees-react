@@ -9,7 +9,7 @@ const style = {
 };
 
 class MapContainer extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       showingInfoWindow: false,
@@ -19,14 +19,16 @@ class MapContainer extends React.Component {
     this.onMarkerClick = this.onMarkerClick.bind(this);
   }
 
-  onMarkerClick(props, marker){
+  onMarkerClick(props, marker) {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
-    });}
+    });
+  }
 
-  render(){
+  render() {
+    console.log(this.props.treeData);
     return (
       <Map
         google={this.props.google}
@@ -39,7 +41,7 @@ class MapContainer extends React.Component {
         {Object.keys(this.props.treeData).map((treeId) => {
           let marker = this.props.treeData[treeId];
           return <Marker title={marker.properties.COMMON}
-            position={{lat: marker.properties.LAT, lng: marker.properties.LON}}
+            position={{ lat: marker.properties.LAT, lng: marker.properties.LON }}
             address={marker.properties.SITE_ADDRESS}
             year={marker.properties.YEAR_Designated}
             onClick={this.onMarkerClick}
