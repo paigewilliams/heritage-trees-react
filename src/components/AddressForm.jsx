@@ -8,11 +8,11 @@ const FormStyles = styled.div`
   z-index: 3;
 `;
 
-function AddressForm({ dispatch, treeData, currentCoords }){
+function AddressForm({ dispatch, treeData }){
   let _address = null;
 
-  function handleNewAddressFormSubmission(event){
-    event.preventDefault();
+  function handleNewAddressFormSubmission(e){
+    e.preventDefault();
     const formattedAddress = _address.value.replace(/\s/g, '+');
     dispatch(fetchCoords(formattedAddress, treeData));
   }
@@ -33,8 +33,7 @@ function AddressForm({ dispatch, treeData, currentCoords }){
 
 const mapStateToProps = state => {
   return {
-    treeData: state.treeData,
-    currentCoords: state.currentCoords
+    treeData: state.treeData
   };
 };
 
