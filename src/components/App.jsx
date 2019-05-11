@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-
 const GlobalStyles = createGlobalStyle`
   body {
     @import url('https://fonts.googleapis.com/css?family=Lato');
@@ -18,8 +17,8 @@ const GlobalStyles = createGlobalStyle`
 const MapContainerStyles = styled.div`
   width: 50%;
   height: 50%;
-  margin-top: 200px;
-  margin-left: 300px;
+  margin-top: 5rem;
+  margin-left: 30rem;
 `;
 
 export class App extends React.Component{
@@ -40,6 +39,9 @@ export class App extends React.Component{
           {renderedContent}
         </MapContainerStyles>
         <div>
+          <div>
+            <h1>Portland Heritage Trees</h1>
+          </div>
           <AddressForm />
         </div>
       </div>
