@@ -9,7 +9,7 @@
     "lint": "eslint src/** src/**/**; exit 0",
     "lint-fix": "eslint src/** src/**/** --fix; exit 0"
   },
-  "author": "paige williams && devin sweeting",
+  "author": "paige williams && tanvi garg",
   "license": "ISC",
   "dependencies": {
     "dotenv-webpack": "^1.7.0",
