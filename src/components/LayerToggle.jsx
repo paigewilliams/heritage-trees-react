@@ -44,11 +44,12 @@ const Toggle = styled.input`
     }
   }
 `;
-function LayerToggle({ onToggle }) {
+function LayerToggle({ onToggle, showAllData }) {
   return (
     <div>
+      <h3>Show trees within a mile of address</h3>
       <LayerToggleContainter>
-        <Toggle id="checkbox" type="checkbox" onChange={onToggle} />
+        <Toggle id="checkbox" type="checkbox" checked={showAllData ? false : true} onChange={onToggle} />
         <LayerToggleLabel htmlFor="checkbox" />
       </LayerToggleContainter>
     </div>
@@ -56,7 +57,8 @@ function LayerToggle({ onToggle }) {
 }
 
 LayerToggle.propTypes = {
-  onToggle: PropTypes.func
+  onToggle: PropTypes.func,
+  showAllData: PropTypes.bool
 };
 
 export default LayerToggle;
