@@ -26,8 +26,16 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     const { dispatch } = props;
+    this.state = {
+      allData: true
+    }
     dispatch(fetchTreeData());
+    this.handleToggle = this.handleToggle.bind(this);
   }
+
+  handleToggle() {
+    this.state.allData === true ? this.setState({allData: false}) : this.setState({allData: true});
+  };
 
   render() {
     let renderedContent;
@@ -46,7 +54,7 @@ export class App extends React.Component {
             <h1>Portland Heritage Trees</h1>
           </div>
           <AddressForm />
-          <LayerToggle />
+          <LayerToggle onToggle={this.handleToggle} />
         </div>
       </div>
     );
