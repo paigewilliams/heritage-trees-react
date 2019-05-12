@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -48,7 +48,7 @@ function LayerToggle({ onToggle }) {
   return (
     <div>
       <LayerToggleContainter>
-        <Toggle id="checkbox" type="checkbox" onChange={onToggle}  />
+        <Toggle id="checkbox" type="checkbox" onChange={onToggle} />
         <LayerToggleLabel htmlFor="checkbox" />
       </LayerToggleContainter>
     </div>
@@ -57,6 +57,6 @@ function LayerToggle({ onToggle }) {
 
 LayerToggle.propTypes = {
   onToggle: PropTypes.func
-}
+};
 
 export default LayerToggle;
