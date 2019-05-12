@@ -25,24 +25,37 @@ const MapContainerStyles = styled.div`
 export class App extends React.Component {
   constructor(props) {
     super(props);
-    const { dispatch } = props;
     this.state = {
-      allData: true
+      showAllData: true
     }
-    dispatch(fetchTreeData());
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleShowFilteredData = this.handleShowFilteredData.bind(this);
+  }
+
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchTreeData());
   }
 
   handleToggle() {
-    this.state.allData === true ? this.setState({allData: false}) : this.setState({allData: true});
+    this.state.showAllData === true ? this.setState({ showAllData: false }) : this.setState({ showAllData: true });
   };
+
+  handleShowFilteredData() {
+    this.setState({ showAllData: false });
+  }
 
   render() {
     let renderedContent;
-    Object.entries(this.props.treeData).length !== 0 ?
-      renderedContent = <MapContainer treeData={Object.entries(this.props.filteredTreeData).length !== 0 ? this.props.filteredTreeData : this.props.treeData} />
-      : null;
-
+    if (Object.entries(this.props.treeData).length !== 0) {
+      if (this.state.showAllData === true) {
+        renderedContent = <MapContainer treeData={this.props.treeData} />
+      } else if (Object.entries(this.props.filteredTreeData).length !== 0 & this.state.showAllData === false) {
+        renderedContent = <MapContainer treeData={this.props.filteredTreeData} />
+      } else {
+        renderedContent = <MapContainer treeData={this.props.treeData} />
+      }
+    }
     return (
       <div>
         <GlobalStyles />
@@ -53,7 +66,7 @@ export class App extends React.Component {
           <div>
             <h1>Portland Heritage Trees</h1>
           </div>
-          <AddressForm />
+          <AddressForm onFormSubmit={this.handleShowFilteredData} />
           <LayerToggle onToggle={this.handleToggle} />
         </div>
       </div>
