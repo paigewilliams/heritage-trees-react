@@ -1,6 +1,7 @@
 import React from 'react';
 import MapContainer from './MapContainer';
 import AddressForm from './AddressForm';
+import LayerToggle from './LayerToggle';
 import { createGlobalStyle } from 'styled-components';
 import { fetchTreeData } from './../actions';
 import PropTypes from 'prop-types';
@@ -45,6 +46,7 @@ export class App extends React.Component {
             <h1>Portland Heritage Trees</h1>
           </div>
           <AddressForm />
+          <LayerToggle />
         </div>
       </div>
     );
