@@ -37,8 +37,8 @@ export class App extends React.Component {
     dispatch(fetchTreeData());
   }
 
-  handleToggle() {
-    this.state.showAllData === true ? this.setState({ showAllData: false }) : this.setState({ showAllData: true });
+  handleToggle(event) {
+    event.target.checked === true ? this.setState({ showAllData: false }) : this.setState({ showAllData: true });
   }
 
   handleShowFilteredData() {
@@ -67,7 +67,7 @@ export class App extends React.Component {
             <h1>Portland Heritage Trees</h1>
           </div>
           <AddressForm onFormSubmit={this.handleShowFilteredData} />
-          <LayerToggle onToggle={this.handleToggle} />
+          <LayerToggle onToggle={this.handleToggle} showAllData={this.state.showAllData} />
         </div>
       </div>
     );
