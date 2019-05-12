@@ -27,7 +27,7 @@ export class App extends React.Component {
     super(props);
     this.state = {
       showAllData: true
-    }
+    };
     this.handleToggle = this.handleToggle.bind(this);
     this.handleShowFilteredData = this.handleShowFilteredData.bind(this);
   }
@@ -39,7 +39,7 @@ export class App extends React.Component {
 
   handleToggle() {
     this.state.showAllData === true ? this.setState({ showAllData: false }) : this.setState({ showAllData: true });
-  };
+  }
 
   handleShowFilteredData() {
     this.setState({ showAllData: false });
@@ -49,11 +49,11 @@ export class App extends React.Component {
     let renderedContent;
     if (Object.entries(this.props.treeData).length !== 0) {
       if (this.state.showAllData === true) {
-        renderedContent = <MapContainer treeData={this.props.treeData} />
+        renderedContent = <MapContainer treeData={this.props.treeData} />;
       } else if (Object.entries(this.props.filteredTreeData).length !== 0 & this.state.showAllData === false) {
-        renderedContent = <MapContainer treeData={this.props.filteredTreeData} />
+        renderedContent = <MapContainer treeData={this.props.filteredTreeData} />;
       } else {
-        renderedContent = <MapContainer treeData={this.props.treeData} />
+        renderedContent = <MapContainer treeData={this.props.treeData} />;
       }
     }
     return (
