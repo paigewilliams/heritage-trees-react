@@ -1,5 +1,5 @@
 import React from 'react';
-import MapContainer from './MapContainer';
+import Map from './MapContainer';
 import AddressForm from './AddressForm';
 import LayerToggle from './LayerToggle';
 import { createGlobalStyle } from 'styled-components';
@@ -49,11 +49,11 @@ export class App extends React.Component {
     let renderedContent;
     if (Object.entries(this.props.treeData).length !== 0) {
       if (this.state.showAllData === true) {
-        renderedContent = <MapContainer treeData={this.props.treeData} />;
+        renderedContent = <Map treeData={this.props.treeData} />;
       } else if (Object.entries(this.props.filteredTreeData).length !== 0 & this.state.showAllData === false) {
-        renderedContent = <MapContainer treeData={this.props.filteredTreeData} />;
+        renderedContent = <Map treeData={this.props.filteredTreeData} />;
       } else {
-        renderedContent = <MapContainer treeData={this.props.treeData} />;
+        renderedContent = <Map treeData={this.props.treeData} />;
       }
     }
     return (
