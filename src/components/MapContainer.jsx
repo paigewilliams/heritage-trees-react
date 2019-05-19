@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 // import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import styled from 'styled-components';
 // import mapboxgl from 'mapbox-gl';
-import ReactMapGL from 'react-map-gl';
-// import v4 from 'uuid/v4';
+import ReactMapGL, { Marker } from 'react-map-gl';
+import v4 from 'uuid/v4';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import Pin from './Pin';
 
 const TOKEN = 'pk.eyJ1IjoicGFpZ2V3aWxsaWFtcyIsImEiOiJjanNzNDlkc2QxcDg4NDRvMnllMTY5d3FhIn0.fdKpE8Pe2MuB4oe05YCvLw';
 
@@ -29,31 +30,17 @@ class Map extends Component {
         height: 500,
       }
     };
+    this.renderTreeData = this.renderTreeData.bind(this);
   }
 
-  // componentDidUpdate() {
-  //   console.log(this.props.treeData);
-  //   Object.keys(this.props.treeData).map(treeId => {
-  //     let tree = this.props.treeData[treeId]
-  //     this.map.addLayer({
-  //       'id': v4(),
-  //       'type': 'circle',
-  //       'source': {
-  //         'type': 'geojson',
-  //         'data': {
-  //           'type': 'Feature',
-  //           'properties': {
-  //             'address': tree.properties.SITE_ADDRESS,
-  //           },
-  //           'geometry': {
-  //             'type': 'Point',
-  //             'coordinates': tree.geometry.coordinates,
-  //           }
-  //         }
-  //       }
-  //     });
-  //   })
-  // }
+  renderTreeData(tree) {
+    return (
+      <Marker key={v4()} latitude={tree.geometry.coordinates[1]} longitude={tree.geometry.coordinates[0]}>
+        <Pin size={20} />
+      </Marker>
+    );
+  }
+
 
   render() {
     const { viewport } = this.state;
@@ -64,6 +51,12 @@ class Map extends Component {
           mapStyle='mapbox://styles/mapbox/light-v9'
           mapboxApiAccessToken={TOKEN}
           onViewportChange={(viewport) => this.setState({ viewport })}>
+          {this.props.treeData && (
+            Object.keys(this.props.treeData).map(treeId => {
+              let tree = this.props.treeData[treeId];
+              return this.renderTreeData(tree);
+            })
+          )}
         </ReactMapGL>
       </MapContainerStyle>
     );
