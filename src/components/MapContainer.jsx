@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import styled from 'styled-components';
 // import mapboxgl from 'mapbox-gl';
-import MapGL from 'react-map-gl';
+import ReactMapGL from 'react-map-gl';
 // import v4 from 'uuid/v4';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -30,24 +30,6 @@ class Map extends Component {
       }
     };
   }
-
-  // componentDidMount() {
-  //   const { lat, lng, zoom } = this.state;
-  //   this.map = new mapboxgl.Map({
-  //     container: this.mapContainer,
-  //     style: 'mapbox://styles/mapbox/light-v9',
-  //     center: [lng, lat],
-  //     zoom
-  //   });
-  //   this.map.on('move', () => {
-  //     const { lng, lat } = this.map.getCenter();
-  //     this.setState({
-  //       lng: lng.toFixed(4),
-  //       lat: lat.toFixed(4),
-  //       zoom: this.map.getZoom().toFixed(2)
-  //     });
-  //   });
-  // }
 
   // componentDidUpdate() {
   //   console.log(this.props.treeData);
@@ -77,12 +59,12 @@ class Map extends Component {
     const { viewport } = this.state;
     return (
       <MapContainerStyle>
-        <MapGL
+        <ReactMapGL
           {...viewport}
           mapStyle='mapbox://styles/mapbox/light-v9'
           mapboxApiAccessToken={TOKEN}
           onViewportChange={(viewport) => this.setState({ viewport })}>
-        </MapGL>
+        </ReactMapGL>
       </MapContainerStyle>
     );
   }
