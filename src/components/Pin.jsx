@@ -6,17 +6,17 @@ const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,
 
 const pinStyle = {
   cursor: 'pointer',
-  fill: '#d00',
+  fill: 'red',
   stroke: 'none'
 };
 
-function Pin() {
+function Pin({ size }) {
 
   return (
     <svg
       height={20}
       viewBox="0 0 24 24"
-      style={pinStyle}
+      style={{ ...pinStyle, transform: `translate(${-size / 2}px,${-size}px)` }}
     >
       <path d={ICON} />
     </svg>
