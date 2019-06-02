@@ -2,6 +2,7 @@ import React from 'react';
 import Map from './MapContainer';
 import AddressForm from './AddressForm';
 import LayerToggle from './LayerToggle';
+import BarChart from './BarChart';
 import { createGlobalStyle } from 'styled-components';
 import { fetchTreeData } from './../actions';
 import PropTypes from 'prop-types';
@@ -68,6 +69,7 @@ export class App extends React.Component {
           <AddressForm onFormSubmit={this.handleShowFilteredData} />
           <LayerToggle onToggle={this.handleToggle} showAllData={this.state.showAllData} />
         </div>
+        <BarChart /> 
       </AppStyles>
     );
   }
