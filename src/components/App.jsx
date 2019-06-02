@@ -15,12 +15,11 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-const MapContainerStyles = styled.div`
-  width: 50%;
-  height: 50%;
-  margin-top: 5rem;
-  margin-left: 30rem;
-`;
+
+const AppStyles = styled.div`
+  display: flex;
+  flex-direction: justify-content;
+`
 
 export class App extends React.Component {
   constructor(props) {
@@ -57,11 +56,11 @@ export class App extends React.Component {
       }
     }
     return (
-      <div>
+      <AppStyles>
         <GlobalStyles />
-        <MapContainerStyles>
+        <div>
           {renderedContent}
-        </MapContainerStyles>
+        </div>
         <div>
           <div>
             <h1>Portland Heritage Trees</h1>
@@ -69,7 +68,7 @@ export class App extends React.Component {
           <AddressForm onFormSubmit={this.handleShowFilteredData} />
           <LayerToggle onToggle={this.handleToggle} showAllData={this.state.showAllData} />
         </div>
-      </div>
+      </AppStyles>
     );
   }
 }
