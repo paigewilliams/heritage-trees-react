@@ -57,20 +57,22 @@ export class App extends React.Component {
       }
     }
     return (
-      <AppStyles>
-        <GlobalStyles />
-        <div>
-          {renderedContent}
-        </div>
-        <div>
+      <div>
+        <AppStyles>
+          <GlobalStyles />
           <div>
-            <h1>Portland Heritage Trees</h1>
+            {renderedContent}
           </div>
-          <AddressForm onFormSubmit={this.handleShowFilteredData} />
-          <LayerToggle onToggle={this.handleToggle} showAllData={this.state.showAllData} />
-        </div>
-        <BarChart /> 
-      </AppStyles>
+          <div>
+            <div>
+              <h1>Portland Heritage Trees</h1>
+            </div>
+            <AddressForm onFormSubmit={this.handleShowFilteredData} />
+            <LayerToggle onToggle={this.handleToggle} showAllData={this.state.showAllData} />
+          </div>
+        </AppStyles>
+        <BarChart />
+      </div>
     );
   }
 }

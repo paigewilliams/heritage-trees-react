@@ -28,7 +28,7 @@ class BarChart extends Component {
     const dataMax = max(treeHeights);
     const yScale = scaleLinear()
       .domain([0, dataMax])
-      .range([0, 500])
+      .range([0, 300])
 
     select(node)
       .selectAll('rect')
@@ -46,15 +46,15 @@ class BarChart extends Component {
       .selectAll('rect')
       .data(treeHeights)
       .style('fill', '#fe9922')
-      .attr('x', (d, i) => i * 25)
+      .attr('x', (d, i) => i * 5)
       .attr('y', d => 500 - yScale(d))
       .attr('height', d => yScale(d))
-      .attr('width', 25)
+      .attr('width', 3)
   }
 
   render() {
     return <svg ref={node => this.node = node}
-      width={5000} height={500}></svg>
+      width={2000} height={500}></svg>
   }
 
 }
