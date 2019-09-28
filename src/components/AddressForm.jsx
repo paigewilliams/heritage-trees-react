@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { fetchCoords } from './../actions';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import { fetchCoords } from "./../actions";
+import styled from "styled-components";
+import { connect } from "react-redux";
 
 const FormStyles = styled.div`
   z-index: 3;
@@ -13,7 +13,7 @@ function AddressForm({ dispatch, treeData, onFormSubmit }) {
 
   function handleNewAddressFormSubmission(e) {
     e.preventDefault();
-    const formattedAddress = _address.value.replace(/\s/g, '+');
+    const formattedAddress = _address.value.replace(/\s/g, "+");
     dispatch(fetchCoords(formattedAddress, treeData));
     onFormSubmit();
   }
@@ -22,11 +22,14 @@ function AddressForm({ dispatch, treeData, onFormSubmit }) {
     <FormStyles>
       <form onSubmit={handleNewAddressFormSubmission}>
         <input
-          type='text'
-          id='address'
-          placeholder='Input Address'
-          ref={(input) => { _address = input; }} />
-        <button type='submit'>Find Trees</button>
+          type="text"
+          id="address"
+          placeholder="Input Address"
+          ref={input => {
+            _address = input;
+          }}
+        />
+        <button type="submit">Find Trees</button>
       </form>
     </FormStyles>
   );
