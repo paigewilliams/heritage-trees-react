@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Map from './MapContainer';
 import AddressForm from './AddressForm';
 import LayerToggle from './LayerToggle';
@@ -22,7 +22,7 @@ const AppStyles = styled.div`
 `;
 
 const App = ({ dispatch, treeData, filteredTreeData }) => {
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(fetchTreeData());
   }, []);
 
