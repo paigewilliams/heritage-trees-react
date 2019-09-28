@@ -44,7 +44,7 @@ const Toggle = styled.input`
     }
   }
 `;
-function LayerToggle({ onToggle, showAllData }) {
+const LayerToggle = ({ onToggle, showAllData }) => {
   return (
     <div>
       <h3>Show trees within a mile of address</h3>
@@ -59,11 +59,11 @@ function LayerToggle({ onToggle, showAllData }) {
       </LayerToggleContainter>
     </div>
   );
-}
+};
 
 LayerToggle.propTypes = {
-  onToggle: PropTypes.func,
-  showAllData: PropTypes.bool
+  onToggle: PropTypes.func.isRequired,
+  showAllData: PropTypes.bool.isRequired
 };
 
 export default LayerToggle;
