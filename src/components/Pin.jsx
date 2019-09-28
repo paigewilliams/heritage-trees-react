@@ -12,7 +12,6 @@ const pinStyle = {
 };
 
 function Pin({ size }) {
-
   return (
     <svg
       height={20}

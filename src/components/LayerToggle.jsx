@@ -49,7 +49,12 @@ function LayerToggle({ onToggle, showAllData }) {
     <div>
       <h3>Show trees within a mile of address</h3>
       <LayerToggleContainter>
-        <Toggle id="checkbox" type="checkbox" checked={showAllData ? false : true} onChange={onToggle} />
+        <Toggle
+          id="checkbox"
+          type="checkbox"
+          checked={showAllData ? false : true}
+          onChange={onToggle}
+        />
         <LayerToggleLabel htmlFor="checkbox" />
       </LayerToggleContainter>
     </div>

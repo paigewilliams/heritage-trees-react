@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import Map from './MapContainer';
 import AddressForm from './AddressForm';
 import LayerToggle from './LayerToggle';
@@ -16,71 +16,70 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-
 const AppStyles = styled.div`
   display: flex;
   flex-direction: justify-content;
-`
+`;
 
-export class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showAllData: true
-    };
-    this.handleToggle = this.handleToggle.bind(this);
-    this.handleShowFilteredData = this.handleShowFilteredData.bind(this);
-  }
-
-  componentWillMount() {
-    const { dispatch } = this.props;
+const App = ({ dispatch, treeData, filteredTreeData }) => {
+  useLayoutEffect(() => {
     dispatch(fetchTreeData());
-  }
+  }, []);
 
-  handleToggle(event) {
-    event.target.checked === true ? this.setState({ showAllData: false }) : this.setState({ showAllData: true });
-  }
+  const [showAllData, setShowAllData] = useState(true);
 
-  handleShowFilteredData() {
-    this.setState({ showAllData: false });
-  }
+  const handleToggle = event => {
+    event.target.checked === true
+      ? setShowAllData(false)
+      : setShowAllData(true);
+  };
 
-  render() {
+  const handleShowFilteredData = () => setShowAllData(false);
+
+  const handleRenderData = () => {
     let renderedContent;
-    if (Object.entries(this.props.treeData).length !== 0) {
-      if (this.state.showAllData === true) {
-        renderedContent = <Map treeData={this.props.treeData} />;
-      } else if (Object.entries(this.props.filteredTreeData).length !== 0 & this.state.showAllData === false) {
-        renderedContent = <Map treeData={this.props.filteredTreeData} />;
+    if (Object.entries(treeData).length !== 0) {
+      if (showAllData === true) {
+        renderedContent = <Map treeData={treeData} />;
+      } else if (
+        (Object.entries(filteredTreeData).length !== 0) &
+        (showAllData === false)
+      ) {
+        renderedContent = <Map treeData={filteredTreeData} />;
       } else {
-        renderedContent = <Map treeData={this.props.treeData} />;
+        renderedContent = <Map treeData={treeData} />;
       }
     }
-    return (
-      <div>
-        <AppStyles>
-          <GlobalStyles />
+    return renderedContent;
+  };
+
+  return (
+    <div>
+      <AppStyles>
+        <GlobalStyles />
+        <div>{handleRenderData()}</div>
+        <div>
           <div>
-            {renderedContent}
+            <h1>Portland Heritage Trees</h1>
           </div>
-          <div>
-            <div>
-              <h1>Portland Heritage Trees</h1>
-            </div>
-            <AddressForm onFormSubmit={this.handleShowFilteredData} />
-            <LayerToggle onToggle={this.handleToggle} showAllData={this.state.showAllData} />
-          </div>
-        </AppStyles>
-        <BarChart />
-      </div>
-    );
-  }
-}
+          <AddressForm onFormSubmit={handleShowFilteredData} />
+          <LayerToggle onToggle={handleToggle} showAllData={showAllData} />
+        </div>
+      </AppStyles>
+      <BarChart />
+    </div>
+  );
+};
 
 App.propTypes = {
-  dispatch: PropTypes.func,
+  dispatch: PropTypes.func.isRequired,
   treeData: PropTypes.object,
-  filteredTreeData: PropTypes.object,
+  filteredTreeData: PropTypes.object
+};
+
+App.defaultProps = {
+  treeData: {},
+  filteredTreeData: {}
 };
 
 const mapStateToProps = state => {

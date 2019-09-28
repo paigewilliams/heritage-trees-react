@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { fetchCoords } from "./../actions";
-import styled from "styled-components";
-import { connect } from "react-redux";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { fetchCoords } from './../actions';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const FormStyles = styled.div`
   z-index: 3;
@@ -13,7 +13,7 @@ function AddressForm({ dispatch, treeData, onFormSubmit }) {
 
   function handleNewAddressFormSubmission(e) {
     e.preventDefault();
-    const formattedAddress = _address.value.replace(/\s/g, "+");
+    const formattedAddress = _address.value.replace(/\s/g, '+');
     dispatch(fetchCoords(formattedAddress, treeData));
     onFormSubmit();
   }

@@ -28,19 +28,19 @@ class BarChart extends Component {
     const dataMax = max(treeHeights);
     const yScale = scaleLinear()
       .domain([0, dataMax])
-      .range([0, 300])
+      .range([0, 300]);
 
     select(node)
       .selectAll('rect')
       .data(treeHeights)
       .enter()
-      .append('rect')
+      .append('rect');
 
     select(node)
       .selectAll('rect')
       .data(treeHeights)
       .exit()
-      .remove()
+      .remove();
 
     select(node)
       .selectAll('rect')
@@ -49,20 +49,20 @@ class BarChart extends Component {
       .attr('x', (d, i) => i * 5)
       .attr('y', d => 500 - yScale(d))
       .attr('height', d => yScale(d))
-      .attr('width', 3)
+      .attr('width', 3);
   }
 
   render() {
-    return <svg ref={node => this.node = node}
-      width={2000} height={500}></svg>
+    return (
+      <svg ref={node => (this.node = node)} width={2000} height={500}></svg>
+    );
   }
-
 }
 
 const mapStateToProps = state => {
   return {
     data: state.treeData
   };
-}
+};
 
 export default connect(mapStateToProps)(BarChart);
