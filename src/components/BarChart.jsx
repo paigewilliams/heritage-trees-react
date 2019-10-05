@@ -34,15 +34,15 @@ const BarChart = ({data}) => {
     select(ref.current)
       .selectAll('rect')
       .data(treeHeights)
-      .style('fill', '#fe9922')
-      .attr('x', (d, i) => i * 5)
+      .style('fill', '#5B965B')
+      .attr('x', (d, i) => i * 4)
       .attr('y', d => 500 - yScale(d))
       .attr('height', d => yScale(d))
       .attr('width', 3);
   };
 
   return (
-    <svg ref={ref} width={2000} height={500}></svg>
+    <svg ref={ref} width={1290} height={500}></svg>
   );
 };
 

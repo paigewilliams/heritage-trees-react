@@ -24,7 +24,7 @@ function AddressForm({ dispatch, treeData, onFormSubmit }) {
         <input
           type="text"
           id="address"
-          placeholder="Input Address"
+          placeholder="500 NE Broadway Ave"
           ref={input => {
             _address = input;
           }}
