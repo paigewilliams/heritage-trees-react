@@ -5,6 +5,8 @@ import { scaleLinear } from 'd3-scale';
 import { max } from 'd3-array';
 import { select } from 'd3-selection';
 
+
+
 const BarChart = ({data}) => {
   const ref = useRef(null);
 
@@ -14,6 +16,7 @@ const BarChart = ({data}) => {
 
   const createBarChart = () => {
     const treeHeights = Object.keys(data).map(id => data[id].properties.HEIGHT);
+    const treeData = Object.keys(data).map(id => data[id])
     const dataMax = max(treeHeights);
     const yScale = scaleLinear()
       .domain([0, dataMax])
@@ -21,23 +24,24 @@ const BarChart = ({data}) => {
 
     select(ref.current)
       .selectAll('rect')
-      .data(treeHeights)
+      .data(treeData)
       .enter()
-      .append('rect');
+      .append('rect')
+      .on('click', (d) => console.log('d', d));
 
     select(ref.current)
       .selectAll('rect')
-      .data(treeHeights)
+      .data(treeData)
       .exit()
       .remove();
 
     select(ref.current)
       .selectAll('rect')
-      .data(treeHeights)
+      .data(treeData)
       .style('fill', '#5B965B')
       .attr('x', (d, i) => i * 4)
-      .attr('y', d => 500 - yScale(d))
-      .attr('height', d => yScale(d))
+      .attr('y', (d) => 500 - yScale(d.properties.HEIGHT))
+      .attr('height', d => yScale(d.properties.HEIGHT))
       .attr('width', 3);
   };
 
