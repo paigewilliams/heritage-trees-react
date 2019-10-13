@@ -5,8 +5,6 @@ import { scaleLinear } from 'd3-scale';
 import { max } from 'd3-array';
 import { select } from 'd3-selection';
 
-
-
 const BarChart = ({data}) => {
   const ref = useRef(null);
 
@@ -16,7 +14,7 @@ const BarChart = ({data}) => {
 
   const createBarChart = () => {
     const treeHeights = Object.keys(data).map(id => data[id].properties.HEIGHT);
-    const treeData = Object.keys(data).map(id => data[id])
+    const treeData = Object.keys(data).map(id => data[id]);
     const dataMax = max(treeHeights);
     const yScale = scaleLinear()
       .domain([0, dataMax])
