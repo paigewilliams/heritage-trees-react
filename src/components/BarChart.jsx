@@ -1,16 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { AppContext, selectData } from '../context/ContextProvider';
 import { scaleLinear } from 'd3-scale';
 import { max } from 'd3-array';
 import { select } from 'd3-selection';
 
-const BarChart = ({data}) => {
+const BarChart = ({ data }) => {
   const ref = useRef(null);
-
+  const { dispatch } = useContext(AppContext);
   useEffect(() => {
     createBarChart();
   }, [data]);
+
+  const handleClick = tree => {
+    dispatch(selectData(tree));
+  }
 
   const createBarChart = () => {
     const treeHeights = Object.keys(data).map(id => data[id].properties.HEIGHT);
@@ -25,7 +29,7 @@ const BarChart = ({data}) => {
       .data(treeData)
       .enter()
       .append('rect')
-      .on('click', (d) => console.log('d', d));
+      .on('click', (d) => handleClick(d));
 
     select(ref.current)
       .selectAll('rect')
@@ -37,25 +41,19 @@ const BarChart = ({data}) => {
       .selectAll('rect')
       .data(treeData)
       .style('fill', '#5B965B')
-      .attr('x', (d, i) => i * 4)
+      .attr('x', (d, i) => i * 9)
       .attr('y', (d) => 500 - yScale(d.properties.HEIGHT))
       .attr('height', d => yScale(d.properties.HEIGHT))
-      .attr('width', 3);
+      .attr('width', 7);
   };
 
   return (
-    <svg ref={ref} width={1290} height={500}></svg>
+    <svg ref={ref} width={1600} height={500}></svg>
   );
-};
-
-const mapStateToProps = state => {
-  return {
-    data: state.treeData
-  };
 };
 
 BarChart.propTypes = {
   data: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps)(BarChart);
+export default BarChart;

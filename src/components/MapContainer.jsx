@@ -7,31 +7,31 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import Pin from './Pin';
 
 const MapContainerStyle = styled.div`
-  width: 50rem;
+  width: 100rem;
   height: 30rem;
   padding-right: 2rem;
   display: flex
 `;
 
-const MapContainer = ({treeData}) => {
-  const [viewport, setViewport] = useState({ 
+const MapContainer = ({ treeData }) => {
+  const [viewport, setViewport] = useState({
     latitude: 45.5122,
     longitude: -122.6587,
     zoom: 10,
     bearing: 0,
     pitch: 0,
     width: '100%',
-    height: 500 
+    height: 500
   });
 
-  const onViewportChange = viewport  => setViewport({...viewport });
-  
+  const onViewportChange = viewport => setViewport({ ...viewport });
+
   const displayTreeData = (tree) => (
     <Marker key={v4()} latitude={tree.geometry.coordinates[1]} longitude={tree.geometry.coordinates[0]}>
       <Pin size={20} />
     </Marker>
   );
-     
+
   return (
     <MapContainerStyle>
       <MapGL

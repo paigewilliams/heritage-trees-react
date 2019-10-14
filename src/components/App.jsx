@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import styled, { createGlobalStyle } from 'styled-components';
+import { AppContext } from '../context/ContextProvider';
 import Map from './MapContainer';
+import BarChart from './BarChart';
 import AddressForm from './AddressForm';
 import LayerToggle from './LayerToggle';
-import BarChart from './BarChart';
-import { createGlobalStyle } from 'styled-components';
-import { fetchTreeData } from './../actions';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -21,12 +19,10 @@ const AppStyles = styled.div`
   flex-direction: justify-content;
 `;
 
-const App = ({ dispatch, treeData, filteredTreeData }) => {
-  useEffect(() => {
-    dispatch(fetchTreeData());
-  }, []);
-
+const App = () => {
   const [showAllData, setShowAllData] = useState(true);
+  const { state } = useContext(AppContext);
+  const { treeData, filteredTreeData } = state;
 
   const handleToggle = event => {
     event.target.checked === true
@@ -54,39 +50,18 @@ const App = ({ dispatch, treeData, filteredTreeData }) => {
   };
 
   return (
-    <div>
+    <Fragment>
       <AppStyles>
         <GlobalStyles />
-        <div>{handleRenderData()}</div>
         <div>
-          <div>
-            <h1>Portland Heritage Trees</h1>
-          </div>
+          {handleRenderData()}
           <AddressForm onFormSubmit={handleShowFilteredData} />
+          <BarChart data={treeData} />
           <LayerToggle onToggle={handleToggle} showAllData={showAllData} />
         </div>
       </AppStyles>
-      <BarChart />
-    </div>
+    </Fragment>
   );
 };
 
-App.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  treeData: PropTypes.object,
-  filteredTreeData: PropTypes.object
-};
-
-App.defaultProps = {
-  treeData: {},
-  filteredTreeData: {}
-};
-
-const mapStateToProps = state => {
-  return {
-    treeData: state.treeData,
-    filteredTreeData: state.filteredTreeData
-  };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;

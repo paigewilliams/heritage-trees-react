@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { fetchCoords } from './../actions';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { AppContext } from '../context/ContextProvider';
+
 
 const FormStyles = styled.div`
   z-index: 3;
 `;
 
-function AddressForm({ dispatch, treeData, onFormSubmit }) {
+function AddressForm({ onFormSubmit }) {
+  const { fetchCoords } = useContext(AppContext);
   let _address = null;
 
   function handleNewAddressFormSubmission(e) {
     e.preventDefault();
     const formattedAddress = _address.value.replace(/\s/g, '+');
-    dispatch(fetchCoords(formattedAddress, treeData));
+    fetchCoords(formattedAddress);
     onFormSubmit();
   }
 
@@ -35,16 +36,5 @@ function AddressForm({ dispatch, treeData, onFormSubmit }) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    treeData: state.treeData
-  };
-};
 
-AddressForm.propTypes = {
-  dispatch: PropTypes.func,
-  treeData: PropTypes.object,
-  onFormSubmit: PropTypes.func
-};
-
-export default connect(mapStateToProps)(AddressForm);
+export default AddressForm;
