@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer, useEffect, useMemo, useRef } from 'react';
 import { findTreesWithinAMile } from '../utils';
 
 const REQUEST_DATA_SUCCESS = 'REQUEST_DATA_SUCCESS';
@@ -28,6 +28,27 @@ const initialState = {
   selectedData: {}
 }
 
+const logger = dispatch => action => {
+  console.groupCollapsed('type:', action.type);
+  return dispatch(action);
+}
+
+const useReducerWithLogger = (...args) => {
+  let prevState = useRef(initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const dispatchWithLogger = useMemo(() => logger(dispatch), [dispatch]);
+
+  useEffect(() => {
+    if (state !== initialState) {
+      console.log("Previous state: ", prevState.current);
+      console.log("Next State: ", state);
+      console.groupEnd();
+    }
+    prevState.current = state;
+  }, [state]);
+  return [state, dispatchWithLogger];
+}
 
 const fetchTreeData = async dispatch => {
   try {
@@ -62,7 +83,7 @@ const fetchCoords = (dispatch, treeData) => {
 export const AppContext = createContext(initialState);
 
 const AppContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducerWithLogger(reducer, initialState);
 
   useEffect(() => {
     fetchTreeData(dispatch);
