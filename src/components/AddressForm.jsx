@@ -3,21 +3,20 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { AppContext } from '../context/ContextProvider';
 
-
 const FormStyles = styled.div`
   z-index: 3;
 `;
 
-function AddressForm({ onFormSubmit }) {
+const AddressForm = ({ onFormSubmit }) => {
   const { fetchCoords } = useContext(AppContext);
   let _address = null;
 
-  function handleNewAddressFormSubmission(e) {
+  const handleNewAddressFormSubmission = (e) => {
     e.preventDefault();
     const formattedAddress = _address.value.replace(/\s/g, '+');
     fetchCoords(formattedAddress);
     onFormSubmit();
-  }
+  };
 
   return (
     <FormStyles>
@@ -34,7 +33,11 @@ function AddressForm({ onFormSubmit }) {
       </form>
     </FormStyles>
   );
-}
+};
+
+AddressForm.propTypes = {
+  onFormSubmit: PropTypes.func,
+};
 
 
 export default AddressForm;

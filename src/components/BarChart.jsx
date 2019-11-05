@@ -14,7 +14,7 @@ const BarChart = ({ data }) => {
 
   const handleClick = tree => {
     dispatch(selectData(tree));
-  }
+  };
 
   const createBarChart = () => {
     const treeHeights = Object.keys(data).map(id => data[id].properties.HEIGHT);
@@ -22,7 +22,7 @@ const BarChart = ({ data }) => {
     const dataMax = max(treeHeights);
     const yScale = scaleLinear()
       .domain([0, dataMax])
-      .range([0, 300]);
+      .range([0, 180]);
 
     select(ref.current)
       .selectAll('rect')
@@ -41,19 +41,19 @@ const BarChart = ({ data }) => {
       .selectAll('rect')
       .data(treeData)
       .style('fill', '#5B965B')
-      .attr('x', (d, i) => i * 9)
-      .attr('y', (d) => 500 - yScale(d.properties.HEIGHT))
+      .attr('x', (d, i) => i * 5)
+      .attr('y', (d) => 150 - yScale(d.properties.HEIGHT))
       .attr('height', d => yScale(d.properties.HEIGHT))
-      .attr('width', 7);
+      .attr('width', 3);
   };
 
   return (
-    <svg ref={ref} width={1600} height={500}></svg>
+    <svg ref={ref} width={1270} height={200}></svg>
   );
 };
 
 BarChart.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.array.isRequired
 };
 
 export default BarChart;

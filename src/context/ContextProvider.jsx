@@ -23,8 +23,8 @@ const reducer = (state = {}, action) => {
 };
 
 const initialState = {
-  treeData: {},
-  filteredTreeData: {},
+  treeData: [],
+  filteredTreeData: [],
   selectedData: {}
 }
 

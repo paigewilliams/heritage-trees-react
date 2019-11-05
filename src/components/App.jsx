@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useState, Fragment } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { AppContext } from '../context/ContextProvider';
 import Map from './MapContainer';
@@ -55,8 +54,8 @@ const App = () => {
         <GlobalStyles />
         <div>
           {handleRenderData()}
-          <AddressForm onFormSubmit={handleShowFilteredData} />
           <BarChart data={treeData} />
+          <AddressForm onFormSubmit={handleShowFilteredData} />
           <LayerToggle onToggle={handleToggle} showAllData={showAllData} />
         </div>
       </AppStyles>

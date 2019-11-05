@@ -1,10 +1,11 @@
 export const findTreesWithinAMile = (treeData, currentCoords, mile) => (
-  Object.keys(treeData).reduce((accumulator, treeId) => {
+  Object.keys(treeData).reduce((_accumulator, treeId) => {
+    const accumulator = _accumulator;
     const tree = treeData[treeId];
     const treeCoords = { lat: tree.geometry.coordinates[1], lng: tree.geometry.coordinates[0] };
-    mathForTreesWithinAMile(treeCoords, currentCoords, mile) ? accumulator[treeId] = tree : null;
+    mathForTreesWithinAMile(treeCoords, currentCoords, mile) ? accumulator.push(tree) : null;
     return accumulator;
-  }, {}));
+  }, []));
 
 const mathForTreesWithinAMile = (checkTree, centerPoint, mile) => {
   const ky = 40000 / 360;
