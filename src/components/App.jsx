@@ -5,6 +5,7 @@ import Map from './MapContainer';
 import BarChart from './BarChart';
 import AddressForm from './AddressForm';
 import LayerToggle from './LayerToggle';
+import Tabs from './Tabs';
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -23,10 +24,13 @@ const AppStyles = styled.div`
   }
 `;
 
+const TAB_LABELS = ['Height', 'Age', 'Species'];
+
 const App = () => {
   const [showAllData, setShowAllData] = useState(true);
   const { state } = useContext(AppContext);
   const { treeData, filteredTreeData } = state;
+  const [selectedTab, setSelectedTab] = useState('Height');
 
   const handleToggle = event => {
     event.target.checked === true
@@ -35,6 +39,8 @@ const App = () => {
   };
 
   const handleShowFilteredData = () => setShowAllData(false);
+
+  const handleSelectedTab = (tab) => setSelectedTab(tab);
 
   const handleRenderData = () => {
     let renderedContent;
@@ -63,6 +69,7 @@ const App = () => {
             <AddressForm onFormSubmit={handleShowFilteredData} />
             <LayerToggle onToggle={handleToggle} showAllData={showAllData} />
           </div>
+          <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
           <BarChart data={treeData} />
         </div>
       </AppStyles>
