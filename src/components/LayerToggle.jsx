@@ -3,7 +3,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const LayerToggleContainter = styled.div`
-  position: relative;
+  padding-left: 1rem;
+  div {
+    position: relative;
+  }
+  h3 {
+    margin-top: 0;
+    padding-right: 1rem;
+  }
+  
 `;
 const LayerToggleLabel = styled.label`
   position: absolute;
@@ -46,9 +54,9 @@ const Toggle = styled.input`
 `;
 const LayerToggle = ({ onToggle, showAllData }) => {
   return (
-    <div>
+    <LayerToggleContainter>
       <h3>Show trees within a mile of address</h3>
-      <LayerToggleContainter>
+      <div>
         <Toggle
           id="checkbox"
           type="checkbox"
@@ -56,8 +64,8 @@ const LayerToggle = ({ onToggle, showAllData }) => {
           onChange={onToggle}
         />
         <LayerToggleLabel htmlFor="checkbox" />
-      </LayerToggleContainter>
-    </div>
+      </div>
+    </LayerToggleContainter>
   );
 };
 

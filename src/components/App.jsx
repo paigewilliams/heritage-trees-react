@@ -16,6 +16,11 @@ const GlobalStyles = createGlobalStyle`
 const AppStyles = styled.div`
   display: flex;
   flex-direction: justify-content;
+  div {
+    div {
+      display: flex;
+    }
+  }
 `;
 
 const App = () => {
@@ -54,9 +59,11 @@ const App = () => {
         <GlobalStyles />
         <div>
           {handleRenderData()}
+          <div>
+            <AddressForm onFormSubmit={handleShowFilteredData} />
+            <LayerToggle onToggle={handleToggle} showAllData={showAllData} />
+          </div>
           <BarChart data={treeData} />
-          <AddressForm onFormSubmit={handleShowFilteredData} />
-          <LayerToggle onToggle={handleToggle} showAllData={showAllData} />
         </div>
       </AppStyles>
     </Fragment>

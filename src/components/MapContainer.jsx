@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MapGL, { Source, Layer, Popup } from 'react-map-gl';
+import { AppContext, selectData } from '../context/ContextProvider';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MapContainerStyle = styled.div`
   width: 100%;
-  height: 30rem;
+  height: 25rem;
   padding-right: 2rem;
   display: flex
 `;
@@ -39,7 +40,7 @@ const MapContainer = ({ treeData }) => {
   const [dataForMap, setDataForMap] = useState({ type: 'FeatureCollection', features: [] });
   const [viewport, setViewport] = useState(initalViewport);
   const [clickedFeature, setClickedFeature] = useState(null);
-
+  const { dispatch } = useContext(AppContext);
   const onMapUpdate = (treeData) => {
     return setDataForMap({ type: 'FeatureCollection', features: treeData });
   };
@@ -58,7 +59,7 @@ const MapContainer = ({ treeData }) => {
           closeOnClick={true}
           onClose={() => setClickedFeature(null)}
         >
-          <div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <h4>Common Name: {`${clickedFeature.feature.properties.COMMON}`}</h4>
             <p>Scientific name: {`${clickedFeature.feature.properties.SCIENTIFIC}`}</p>
             <p>Height: {`${clickedFeature.feature.properties.HEIGHT}`}ft</p>
@@ -82,6 +83,7 @@ const MapContainer = ({ treeData }) => {
     } = event;
     const clickedFeature = features && features.find(f => f.layer.id === 'data');
     clickedFeature && setClickedFeature({ feature: clickedFeature, x: offsetX, y: offsetY });
+    clickedFeature && dispatch(selectData(clickedFeature.properties));
   };
 
   return (
