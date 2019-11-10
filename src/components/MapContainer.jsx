@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import MapGL, { Source, Layer } from 'react-map-gl';
+import MapGL, { Source, Layer, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MapContainerStyle = styled.div`
@@ -9,17 +9,6 @@ const MapContainerStyle = styled.div`
   height: 30rem;
   padding-right: 2rem;
   display: flex
-`;
-
-const Tooltip = styled.div`
-  margin: 8px;
-  padding: 4px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  max-width: 300px;
-  font-size: 10px;
-  z-index: 9;
-  pointer-events: none;
 `;
 
 const dataLayer = {
@@ -30,7 +19,7 @@ const dataLayer = {
       'base': 1.75,
       'stops': [[12, 2], [22, 180]]
     },
-    'circle-color': 'orange',
+    'circle-color': '#5B965B',
   }
 };
 
@@ -49,37 +38,51 @@ const MapContainer = ({ treeData }) => {
   useEffect(() => onMapUpdate(treeData), [treeData]);
   const [dataForMap, setDataForMap] = useState({ type: 'FeatureCollection', features: [] });
   const [viewport, setViewport] = useState(initalViewport);
-  const [hoveredFeature, setHoveredFeature] = useState({ hoveredFeature: null, x: null, y: null });
+  const [clickedFeature, setClickedFeature] = useState(null);
 
-  const onMapUpdate = (treeData) =>
-    setDataForMap({ type: 'FeatureCollection', features: treeData });
-
-
-  const onHover = e => {
-    const { features, srcEvent: { offsetX, offsetY } } = e;
-    const hoveredFeature = features && features.find(f => f.layer.id === 'data');
-    setHoveredFeature({ hoveredFeature, x: offsetX, y: offsetY });
-  };
-
-  const renderTooltip = () => {
-    const { x, y } = hoveredFeature;
-
-    return (
-      hoveredFeature && hoveredFeature.properties && (
-        <Tooltip style={{ left: x, top: y }}>
-          <div>Common name: {hoveredFeature.properties.COMMON}</div>
-        </Tooltip>
-      )
-    );
+  const onMapUpdate = (treeData) => {
+    return setDataForMap({ type: 'FeatureCollection', features: treeData });
   };
 
   const onViewportChange = viewport => setViewport({ ...viewport });
+
+  const renderPopUp = () => {
+
+    return (
+      clickedFeature && (
+        <Popup
+          tipSize={5}
+          anchor="top"
+          longitude={clickedFeature.feature.properties.LON}
+          latitude={clickedFeature.feature.properties.LAT}
+          closeOnClick={true}
+          onClose={() => setClickedFeature(null)}
+        >
+          <div>
+            <h4>Common Name: {`${clickedFeature.feature.properties.COMMON}`}</h4>
+            <p>Scientific name: {`${clickedFeature.feature.properties.SCIENTIFIC}`}</p>
+            <p>Height: {`${clickedFeature.feature.properties.HEIGHT}`}ft</p>
+            <p>Circumference: {`${clickedFeature.feature.properties.CIRCUMF}`}in</p>
+          </div>
+        </Popup>
+      )
+    );
+  };
 
   // eslint-disable-next-line react/no-multi-comp
   const renderTreeData = () =>
     (<Source type="geojson" data={dataForMap}>
       <Layer {...dataLayer} />
     </Source>);
+
+  const onClick = (event) => {
+    const {
+      features,
+      srcEvent: { offsetX, offsetY }
+    } = event;
+    const clickedFeature = features && features.find(f => f.layer.id === 'data');
+    clickedFeature && setClickedFeature({ feature: clickedFeature, x: offsetX, y: offsetY });
+  };
 
   return (
     <MapContainerStyle>
@@ -90,9 +93,10 @@ const MapContainer = ({ treeData }) => {
         mapStyle='mapbox://styles/mapbox/light-v9'
         mapboxApiAccessToken={process.env.MAPBOX_API}
         onViewportChange={onViewportChange}
-        onHover={onHover}>
+        onClick={onClick}
+      >
         {treeData && renderTreeData()}
-        {renderTooltip()}
+        {renderPopUp()}
       </MapGL>
     </MapContainerStyle>
   );
