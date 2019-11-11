@@ -17,11 +17,12 @@ const dataLayer = {
   type: 'circle',
   paint: {
     'circle-radius': {
-      'base': 1.75,
+      'base': 1.5,
       'stops': [[12, 2], [22, 180]]
     },
     'circle-color': '#5B965B',
-  }
+    'circle-opacity': 0.6
+  },
 };
 
 const initalViewport = {
@@ -86,6 +87,10 @@ const MapContainer = ({ treeData }) => {
     clickedFeature && dispatch(selectData(clickedFeature.properties));
   };
 
+  const onHover = (e) => {
+    console.log('e', e);
+  };
+
   return (
     <MapContainerStyle>
       <MapGL
@@ -96,6 +101,7 @@ const MapContainer = ({ treeData }) => {
         mapboxApiAccessToken={process.env.MAPBOX_API}
         onViewportChange={onViewportChange}
         onClick={onClick}
+        onHover={onHover}
       >
         {treeData && renderTreeData()}
         {renderPopUp()}
