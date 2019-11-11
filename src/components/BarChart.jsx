@@ -5,21 +5,21 @@ import { scaleLinear } from 'd3-scale';
 import { max } from 'd3-array';
 import { select } from 'd3-selection';
 
-const BarChart = ({ data }) => {
+const BarChart = ({ data, selectedTab }) => {
   const ref = useRef(null);
   const { dispatch } = useContext(AppContext);
   useEffect(() => {
     createBarChart();
-  }, [data]);
+  }, [data, selectedTab]);
 
   const handleClick = tree => {
     dispatch(selectData(tree));
   };
 
   const createBarChart = () => {
-    const treeHeights = Object.keys(data).map(id => data[id].properties.HEIGHT);
+    const treeValue = Object.keys(data).map(id => data[id].properties[selectedTab.property]);
     const treeData = Object.keys(data).map(id => data[id]);
-    const dataMax = max(treeHeights);
+    const dataMax = max(treeValue);
     const yScale = scaleLinear()
       .domain([0, dataMax])
       .range([0, 180]);
@@ -42,8 +42,8 @@ const BarChart = ({ data }) => {
       .data(treeData)
       .style('fill', '#5B965B')
       .attr('x', (d, i) => i * 5)
-      .attr('y', (d) => 150 - yScale(d.properties.HEIGHT))
-      .attr('height', d => yScale(d.properties.HEIGHT))
+      .attr('y', (d) => 150 - yScale(d.properties[selectedTab.property]))
+      .attr('height', d => yScale(d.properties[selectedTab.property]))
       .attr('width', 3);
   };
 
@@ -53,7 +53,11 @@ const BarChart = ({ data }) => {
 };
 
 BarChart.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  selectedTab: PropTypes.shape({
+    property: PropTypes.string,
+    label: PropTypes.string
+  }).isRequired,
 };
 
 export default BarChart;

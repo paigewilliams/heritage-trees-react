@@ -24,13 +24,17 @@ const AppStyles = styled.div`
   }
 `;
 
-const TAB_LABELS = ['Height', 'Age', 'Species'];
+const TAB_LABELS = [
+  { property: 'HEIGHT', label: 'Height' },
+  { property: 'CIRCUMF', label: 'Circumference' },
+  { property: 'SCIENTIFIC', label: 'Species' }
+];
 
 const App = () => {
   const [showAllData, setShowAllData] = useState(true);
   const { state } = useContext(AppContext);
   const { treeData, filteredTreeData } = state;
-  const [selectedTab, setSelectedTab] = useState('Height');
+  const [selectedTab, setSelectedTab] = useState({ property: 'HEIGHT', label: 'Height' });
 
   const handleToggle = event => {
     event.target.checked === true
@@ -70,7 +74,7 @@ const App = () => {
             <LayerToggle onToggle={handleToggle} showAllData={showAllData} />
           </div>
           <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
-          <BarChart data={treeData} />
+          <BarChart data={treeData} selectedTab={selectedTab} />
         </div>
       </AppStyles>
     </Fragment>
