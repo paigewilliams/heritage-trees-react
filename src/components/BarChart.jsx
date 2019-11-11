@@ -1,54 +1,62 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { AppContext, selectData } from '../context/ContextProvider';
-import { scaleLinear } from 'd3-scale';
-import { max } from 'd3-array';
-import { select } from 'd3-selection';
+import * as d3 from 'd3';
+
+const StyledSVG = styled.svg`
+  rect:hover {
+    fill: red !important;
+  }
+`;
+
+const HEIGHT = 200;
+const WIDTH = 1270;
 
 const BarChart = ({ data, selectedTab }) => {
   const ref = useRef(null);
   const { dispatch } = useContext(AppContext);
   useEffect(() => {
-    createBarChart();
+    draw();
   }, [data, selectedTab]);
 
   const handleClick = tree => {
     dispatch(selectData(tree));
+    d3.select(this).style('fill', () => 'red');
   };
 
-  const createBarChart = () => {
+  const draw = () => {
     const treeValue = Object.keys(data).map(id => data[id].properties[selectedTab.property]);
-    const treeData = Object.keys(data).map(id => data[id]);
-    const dataMax = max(treeValue);
-    const yScale = scaleLinear()
-      .domain([0, dataMax])
-      .range([0, 180]);
+    const maxValue = d3.max(treeValue);
 
-    select(ref.current)
-      .selectAll('rect')
-      .data(treeData)
-      .enter()
-      .append('rect')
-      .on('click', (d) => handleClick(d));
+    const xScale = d3
+      .scaleBand()
+      .domain(d3.range(0, data.length))
+      .range([0, WIDTH])
+      .paddingInner(0.25);
 
-    select(ref.current)
-      .selectAll('rect')
-      .data(treeData)
-      .exit()
-      .remove();
+    const yScale = d3
+      .scaleLinear()
+      .domain([0, maxValue])
+      .range([0, HEIGHT]);
 
-    select(ref.current)
+    d3.select(ref.current)
       .selectAll('rect')
-      .data(treeData)
-      .style('fill', '#5B965B')
-      .attr('x', (d, i) => i * 5)
-      .attr('y', (d) => 150 - yScale(d.properties[selectedTab.property]))
-      .attr('height', d => yScale(d.properties[selectedTab.property]))
-      .attr('width', 3);
+      .data(data)
+      .on('click', (d) => handleClick(d))
+      .transition()
+      .duration(1000)
+      .attr('x', (d, i) => xScale(i))
+      .attr('y', d => yScale(d.properties[selectedTab.property]))
+      .attr('width', xScale.bandwidth())
+      .attr('height', d => HEIGHT - yScale(d.properties[selectedTab.property]))
+      .style('fill', () => '#5B965B');
   };
+
+  const bars = data.map(d => <rect key={d.properties.OBJECTID} />);
 
   return (
-    <svg ref={ref} width={1270} height={200}></svg>
+    <StyledSVG ref={ref} width={WIDTH} height={HEIGHT}>{bars}</StyledSVG>
   );
 };
 
