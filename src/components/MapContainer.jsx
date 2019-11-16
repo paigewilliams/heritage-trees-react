@@ -88,7 +88,7 @@ const MapContainer = ({ treeData }) => {
   };
 
   const onHover = (e) => {
-    console.log('e', e);
+    // console.log('e', e);
   };
 
   return (
