@@ -4,18 +4,23 @@ import { AppContext, selectData } from '../context/ContextProvider';
 import * as d3 from 'd3';
 
 const HEIGHT = 200;
-const WIDTH = 1270;
+const WIDTH = 1800;
 
 const BarChart = ({ data, selectedTab }) => {
   const ref = useRef(null);
-  const { dispatch } = useContext(AppContext);
+  const { dispatch, state } = useContext(AppContext);
+  const { selectedData } = state;
   useEffect(() => {
     draw();
-  }, [data, selectedTab]);
+  }, [data, selectedTab, selectedData]);
 
   const handleClick = tree => {
-    dispatch(selectData(tree));
+    tree !== selectedData && dispatch(selectData(tree));
   };
+
+  const handleColor = (d) =>
+    selectedData.properties && d.properties.OBJECTID === selectedData.properties.OBJECTID ? 'tomato' : '#5B965B';
+
 
   const draw = () => {
     const treeValue = Object.keys(data).map(id => data[id].properties[selectedTab.property]);
@@ -36,7 +41,7 @@ const BarChart = ({ data, selectedTab }) => {
       .selectAll('rect')
       .data(data)
       .on('mouseenter', (d) => handleClick(d))
-      .on('mouseover', () => d3.select(event.currentTarget).style('fill', 'red'))
+      .on('mouseover', () => d3.select(event.currentTarget).style('fill', '#ff6347'))
       .on('mouseout', () => d3.select(event.currentTarget).style('fill', '#5B965B'))
       .transition()
       .duration(1000)
@@ -44,7 +49,7 @@ const BarChart = ({ data, selectedTab }) => {
       .attr('y', d => yScale(d.properties[selectedTab.property]))
       .attr('width', xScale.bandwidth())
       .attr('height', d => HEIGHT - yScale(d.properties[selectedTab.property]))
-      .style('fill', () => '#5B965B');
+      .style('fill', (d) => handleColor(d));
   };
 
   const bars = data.map(d => <rect key={d.properties.OBJECTID} />);

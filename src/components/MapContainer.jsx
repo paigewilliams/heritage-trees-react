@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import MapGL, { Source, Layer, Popup } from 'react-map-gl';
+import { Source, Layer, Popup, StaticMap } from 'react-map-gl';
 import { AppContext, selectData } from '../context/ContextProvider';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import ScatterplotMap from './ScatterplotMap';
 
 const MapContainerStyle = styled.div`
   width: 100%;
@@ -97,14 +98,11 @@ const MapContainer = ({ treeData }) => {
         {...viewport}
         width='100%'
         height='100%'
-        mapStyle='mapbox://styles/mapbox/light-v9'
+        mapStyle='mapbox:styles/mapbox/light-v9'
         mapboxApiAccessToken={process.env.MAPBOX_API}
         onViewportChange={onViewportChange}
-        onClick={onClick}
-        onHover={onHover}
       >
-        {treeData && renderTreeData()}
-        {renderPopUp()}
+        <ScatterplotMap data={treeData} viewport={viewport} />
       </MapGL>
     </MapContainerStyle>
   );
