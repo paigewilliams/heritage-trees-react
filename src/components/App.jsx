@@ -1,7 +1,6 @@
 import React, { useContext, useState, Fragment } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { AppContext } from '../context/ContextProvider';
-// import Map from './MapContainer';
+import { AppContext, sortDataByProp } from '../context/ContextProvider';
 import ScatterplotMap from './ScatterplotMap';
 import BarChart from './BarChart';
 import AddressForm from './AddressForm';
@@ -37,9 +36,8 @@ const TAB_LABELS = [
 
 const App = () => {
   const [showAllData, setShowAllData] = useState(true);
-  const { state } = useContext(AppContext);
-  const { treeData, filteredTreeData } = state;
-  const [selectedTab, setSelectedTab] = useState({ property: 'HEIGHT', label: 'Height' });
+  const { state, dispatch } = useContext(AppContext);
+  const { treeData, filteredTreeData, sortByProp } = state;
 
   const handleToggle = event => {
     event.target.checked === true
@@ -49,7 +47,7 @@ const App = () => {
 
   const handleShowFilteredData = () => setShowAllData(false);
 
-  const handleSelectedTab = (tab) => setSelectedTab(tab);
+  const handleSelectedTab = (tab) => dispatch(sortDataByProp(tab));
 
   const handleRenderData = () => {
     let renderedContent;
@@ -77,8 +75,8 @@ const App = () => {
           <AddressForm onFormSubmit={handleShowFilteredData} />
           <LayerToggle onToggle={handleToggle} showAllData={showAllData} filteredTreeData={filteredTreeData} />
         </FormContainer>
-        <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
-        <BarChart data={treeData} selectedTab={selectedTab} />
+        <Tabs selectedTab={sortByProp} onClick={handleSelectedTab} labels={TAB_LABELS} />
+        <BarChart data={treeData} selectedTab={sortByProp} />
       </AppStyles>
     </Fragment>
   );

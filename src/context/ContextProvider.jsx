@@ -1,13 +1,16 @@
-import React, { createContext, useReducer, useEffect, useMemo, useRef } from 'react';
+import React, { createContext, useReducer, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { findTreesWithinAMile } from '../utils';
 
 const REQUEST_DATA_SUCCESS = 'REQUEST_DATA_SUCCESS';
 const FILTER_DATA_SUCCESS = 'FILTER_DATA_SUCCESS';
 const SELECTED_DATA = 'SELECTED_DATA';
+const SORT_DATA_BY_PROP = 'SORT_DATA_BY_PROP';
 
 export const fetchData = data => ({ type: REQUEST_DATA_SUCCESS, data });
 export const filterData = data => ({ type: FILTER_DATA_SUCCESS, data });
 export const selectData = data => ({ type: SELECTED_DATA, data });
+export const sortDataByProp = data => ({ type: SORT_DATA_BY_PROP, data });
+
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
@@ -17,6 +20,8 @@ const reducer = (state = {}, action) => {
       return { ...state, filteredTreeData: action.data };
     case SELECTED_DATA:
       return { ...state, selectedData: action.data }
+    case SORT_DATA_BY_PROP:
+      return { ...state, sortByProp: action.data }
     default:
       return state;
   }
@@ -25,13 +30,22 @@ const reducer = (state = {}, action) => {
 const initialState = {
   treeData: [],
   filteredTreeData: [],
-  selectedData: {}
+  selectedData: {},
+  sortByProp: { property: 'HEIGHT', label: 'Height' }
 }
 
 const logger = dispatch => action => {
   console.groupCollapsed('type:', action.type);
+  if (action.type === SORT_DATA_BY_PROP) {
+    sortByMiddleware(action);
+  }
   return dispatch(action);
 }
+
+const sortByMiddleware = (action) => {
+  console.log('action', action)
+}
+
 
 const useReducerWithLogger = (...args) => {
   let prevState = useRef(initialState);
@@ -85,7 +99,7 @@ export const AppContext = createContext(initialState);
 const AppContextProvider = ({ children }) => {
   const [state, dispatch] = useReducerWithLogger(reducer, initialState);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchTreeData(dispatch);
   }, []);
 
