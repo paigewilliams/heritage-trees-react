@@ -12,17 +12,21 @@ const GlobalStyles = createGlobalStyle`
   body {
     @import url('https://fonts.googleapis.com/css?family=Lato');
     font-family: 'Lato', sans-serif;
+    margin: 0;
   }
 `;
 
 const AppStyles = styled.div`
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 60% 5% 5% 30%;
+`;
+
+const FormContainer = styled.div`
+  background: whitesmoke;
+  opacity: 0.8;
+  z-index: 2;
   display: flex;
-  flex-direction: justify-content;
-  div {
-    div {
-      display: flex;
-    }
-  }
 `;
 
 const TAB_LABELS = [
@@ -66,17 +70,15 @@ const App = () => {
 
   return (
     <Fragment>
+      <GlobalStyles />
       <AppStyles>
-        <GlobalStyles />
-        <div>
-          {handleRenderData()}
-          <div>
-            <AddressForm onFormSubmit={handleShowFilteredData} />
-            <LayerToggle onToggle={handleToggle} showAllData={showAllData} />
-          </div>
-          <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
-          <BarChart data={treeData} selectedTab={selectedTab} />
-        </div>
+        {handleRenderData()}
+        <FormContainer>
+          <AddressForm onFormSubmit={handleShowFilteredData} />
+          <LayerToggle onToggle={handleToggle} showAllData={showAllData} filteredTreeData={filteredTreeData} />
+        </FormContainer>
+        <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
+        <BarChart data={treeData} selectedTab={selectedTab} />
       </AppStyles>
     </Fragment>
   );

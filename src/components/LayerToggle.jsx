@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const LayerToggleContainter = styled.div`
   padding-left: 1rem;
+  display: flex;
   div {
     position: relative;
   }
@@ -52,7 +53,7 @@ const Toggle = styled.input`
     }
   }
 `;
-const LayerToggle = ({ onToggle, showAllData }) => {
+const LayerToggle = ({ onToggle, showAllData, filteredTreeData }) => {
   return (
     <LayerToggleContainter>
       <h3>Show trees within a mile of address</h3>
@@ -62,6 +63,7 @@ const LayerToggle = ({ onToggle, showAllData }) => {
           type="checkbox"
           checked={showAllData ? false : true}
           onChange={onToggle}
+          disabled={filteredTreeData.length ? false : true}
         />
         <LayerToggleLabel htmlFor="checkbox" />
       </div>
@@ -71,7 +73,8 @@ const LayerToggle = ({ onToggle, showAllData }) => {
 
 LayerToggle.propTypes = {
   onToggle: PropTypes.func.isRequired,
-  showAllData: PropTypes.bool.isRequired
+  showAllData: PropTypes.bool.isRequired,
+  filteredTreeData: PropTypes.array.isRequired
 };
 
 export default LayerToggle;

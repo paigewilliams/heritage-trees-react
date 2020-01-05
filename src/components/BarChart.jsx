@@ -1,10 +1,27 @@
+/* eslint-disable react/jsx-pascal-case */
 import React, { useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { AppContext, selectData } from '../context/ContextProvider';
 import * as d3 from 'd3';
+import styled from 'styled-components';
+import { AppContext, selectData } from '../context/ContextProvider';
+
+const SVG = styled.svg`
+  z-index: 2;
+  background: whitesmoke;
+  opacity: 0.8;
+`;
+
+const ChartContainer = styled.div`
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: whitesmoke;
+  opacity: 0.9;
+`;
 
 const HEIGHT = 200;
-const WIDTH = 1800;
+const WIDTH = 1400;
 
 const BarChart = ({ data, selectedTab }) => {
   const ref = useRef(null);
@@ -23,6 +40,10 @@ const BarChart = ({ data, selectedTab }) => {
 
 
   const draw = () => {
+    // const sortedTrees = data.length && data.sort((a, b) =>
+    //   a.properties[selectedTab.property] > b.properties[selectedTab.property] ? 1 : -1
+    // );
+
     const treeValue = Object.keys(data).map(id => data[id].properties[selectedTab.property]);
     const maxValue = d3.max(treeValue);
 
@@ -55,7 +76,9 @@ const BarChart = ({ data, selectedTab }) => {
   const bars = data.map(d => <rect key={d.properties.OBJECTID} />);
 
   return (
-    <svg ref={ref} width={WIDTH} height={HEIGHT}>{bars}</svg>
+    <ChartContainer>
+      <SVG ref={ref} width={WIDTH} height={HEIGHT}>{bars}</SVG>
+    </ChartContainer>
   );
 };
 
