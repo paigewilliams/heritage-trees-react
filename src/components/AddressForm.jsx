@@ -5,6 +5,34 @@ import { AppContext } from '../context/ContextProvider';
 
 const FormStyles = styled.div`
   z-index: 3;
+  input {
+    font-weight: bold;
+    width: 200px;
+    margin: 0 0 0 1rem;
+    height: 35px;
+    padding: 6px 15px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background: #bebebe;
+    font-size: 14px;
+    ::placeholder {
+      color: white;
+    }
+  }
+  button {
+    font-weight: bold;
+    width: 8rem;
+    margin: 0 35px 20px ;
+    height: 45px;
+    padding: 6px 15px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background: tomato;
+    color: white;
+    font-size: 14px;
+  }
 `;
 
 const AddressForm = ({ onFormSubmit }) => {

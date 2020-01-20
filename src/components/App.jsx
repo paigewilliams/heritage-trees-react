@@ -13,6 +13,15 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Lato', sans-serif;
     margin: 0;
   }
+  input {
+    font-family: 'Lato', sans-serif;
+  }
+  button {
+    font-family: 'Lato', sans-serif;
+  }
+  g {
+    font-family: 'Lato', sans-serif;
+  }
 `;
 
 const AppStyles = styled.div`
