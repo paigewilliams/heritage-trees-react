@@ -1,7 +1,6 @@
 import React, { useContext, useState, Fragment } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { AppContext } from '../context/ContextProvider';
-// import Map from './MapContainer';
 import ScatterplotMap from './ScatterplotMap';
 import BarChart from './BarChart';
 import AddressForm from './AddressForm';

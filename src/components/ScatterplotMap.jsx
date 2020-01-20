@@ -38,7 +38,7 @@ const ScatterplotMap = ({ data }) => {
   }, [selectedData]);
 
   const renderPopUp = () => {
-    console.log('renderPopup', clickedFeature);
+    // console.log('renderPopup', clickedFeature);
     // return (
     //   clickedFeature && (
     //     <Popup
