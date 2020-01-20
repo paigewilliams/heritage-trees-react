@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useMemo, useEffect, useState, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 import styled from 'styled-components';
@@ -52,26 +52,21 @@ const BarChart = React.memo(({ data, selectedTab }) => {
   const { dispatch, state } = useContext(AppContext);
 
   const { selectedData } = state;
-  useEffect(() => {
-    draw();
-  }, [data, selectedTab, selectedData, dimensions]);
 
-  const handleClick = tree => {
-    tree !== selectedData && dispatch(selectData(tree));
-  };
-
-  const handleColor = (d) =>
-    selectedData.properties && d.properties.OBJECTID === selectedData.properties.OBJECTID ? 'tomato' : '#5B965B';
-
-
-  const draw = () => {
-
+  useMemo(() => {
     const svg = d3.select(ref.current);
     if (!dimensions) return;
 
     const treeValue = Object.keys(data).map(id => data[id].properties[selectedTab.property]);
 
     const maxValue = d3.max(treeValue);
+
+    const handleClick = tree => {
+      tree !== selectedData && dispatch(selectData(tree));
+    };
+
+    const handleColor = (d) =>
+      selectedData.properties && d.properties.OBJECTID === selectedData.properties.OBJECTID ? 'tomato' : '#5B965B';
 
     const xScale = d3
       .scaleBand()
@@ -103,14 +98,13 @@ const BarChart = React.memo(({ data, selectedTab }) => {
       .on('mouseover', () => d3.select(event.currentTarget).style('fill', '#ff6347'))
       .on('mouseout', () => d3.select(event.currentTarget).style('fill', '#5B965B'))
       .transition()
-      .duration(1000)
+      .duration(500)
       .attr('x', (d, i) => xScale(i))
       .attr('y', () => -dimensions.height)
       .attr('width', xScale.bandwidth())
       .attr('height', d => dimensions.height - yScale(d.properties[selectedTab.property]))
       .style('fill', (d) => handleColor(d));
-
-  };
+  }, [data, selectedTab, selectedData, dimensions]);
 
   return (
     <ChartContainer ref={containerRef}>
