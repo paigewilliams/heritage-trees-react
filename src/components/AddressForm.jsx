@@ -41,7 +41,7 @@ const AddressForm = ({ onFormSubmit }) => {
 
   const handleNewAddressFormSubmission = (e) => {
     e.preventDefault();
-    const formattedAddress = _address.value.replace(/\s/g, '+');
+    const formattedAddress = encodeURI(_address.value);
     fetchCoords(formattedAddress);
     onFormSubmit();
   };
@@ -52,7 +52,7 @@ const AddressForm = ({ onFormSubmit }) => {
         <input
           type="text"
           id="address"
-          placeholder="500 NE Broadway Ave"
+          placeholder="Address City State Zip"
           ref={input => {
             _address = input;
           }}

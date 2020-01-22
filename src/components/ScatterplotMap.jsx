@@ -28,7 +28,7 @@ const ScatterplotMap = ({ data }) => {
   const { dispatch, state } = useContext(AppContext);
   const { selectedData } = state;
   const [selectedId, setSelectedId] = useState(null);
-  const [clickedFeature, setClickedFeature] = useState(null);
+  // const [clickedFeature, setClickedFeature] = useState(null);
 
   useEffect(() => {
     if (selectedData.properties && selectedData.properties.OBJECTID !== selectedId) {
@@ -37,28 +37,14 @@ const ScatterplotMap = ({ data }) => {
 
   }, [selectedData]);
 
-  const renderPopUp = () => {
-    // console.log('renderPopup', clickedFeature);
-    // return (
-    //   clickedFeature && (
-    //     <Popup
-    //       tipSize={5}
-    //       anchor="top"
-    //       longitude={clickedFeature.feature.properties.LON}
-    //       latitude={clickedFeature.feature.properties.LAT}
-    //       closeOnClick={true}
-    //     // onClose={() => setClickedFeature(null)}
-    //     >
-    //       <div style={{ display: 'flex', flexDirection: 'column' }}>
-    //         <h4>Common Name: {`${clickedFeature.feature.properties.COMMON}`}</h4>
-    //         <p>Scientific name: {`${clickedFeature.feature.properties.SCIENTIFIC}`}</p>
-    //         <p>Height: {`${clickedFeature.feature.properties.HEIGHT}`}ft</p>
-    //         <p>Circumference: {`${clickedFeature.feature.properties.CIRCUMF}`}in</p>
-    //       </div>
-    //     </Popup>
-    //   )
-    // );
-  };
+  // const renderPopUp = () => {
+  //   return clickedFeature && (
+  //     <div style={{ position: 'absolute', zIndex: 6, pointerEvents: 'none' }}>
+  //       {clickedFeature.properties.COMMON}
+  //     </div>
+  //   );
+
+  // };
 
   const renderLayers = () => {
     return ([
@@ -75,10 +61,10 @@ const ScatterplotMap = ({ data }) => {
         lineWidthMinPixels: 1,
         getPosition: d => d.geometry.coordinates,
         getRadius: () => 6,
-        getFillColor: d => d.properties && d.properties.OBJECTID === selectedId ? RED : GREEN,
+        getFillColor: d => d.properties.OBJECTID === selectedId ? RED : GREEN,
         getLineColor: () => [0, 0, 0],
-        onClick: ({ object }) => {
-          setClickedFeature({ fetaure: object });
+        onClick: () => {
+          // setClickedFeature({ fetaure: object });
         },
         onHover: ({ object }) => {
           if (object && object.properties.OBJECTID !== selectedId) {
@@ -110,7 +96,7 @@ const ScatterplotMap = ({ data }) => {
           // eslint-disable-next-line no-undef
           mapboxApiAccessToken={process.env.MAPBOX_API}
         >
-          {renderPopUp()}
+          {/* {renderPopUp()} */}
         </MapGL>
       </DeckGL>
     </MapContainerStyle>

@@ -39,10 +39,12 @@ const initalViewport = {
 
 const MapContainer = ({ treeData }) => {
   useEffect(() => onMapUpdate(treeData), [treeData]);
+
   const [dataForMap, setDataForMap] = useState({ type: 'FeatureCollection', features: [] });
   const [viewport, setViewport] = useState(initalViewport);
   const [clickedFeature, setClickedFeature] = useState(null);
   const { dispatch } = useContext(AppContext);
+
   const onMapUpdate = (treeData) => {
     return setDataForMap({ type: 'FeatureCollection', features: treeData });
   };

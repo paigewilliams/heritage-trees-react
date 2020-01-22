@@ -40,7 +40,6 @@ const FormContainer = styled.div`
 const TAB_LABELS = [
   { property: 'HEIGHT', label: 'Height' },
   { property: 'CIRCUMF', label: 'Circumference' },
-  { property: 'SCIENTIFIC', label: 'Species' }
 ];
 
 const App = () => {
@@ -57,7 +56,14 @@ const App = () => {
 
   const handleShowFilteredData = () => setShowAllData(false);
 
-  const handleSelectedTab = (tab) => setSelectedTab(tab);
+  const handleSelectedTab = (tab) => {
+    if (tab.property !== 'SCIENTIFIC') {
+      setSelectedTab(tab);
+    } else {
+      console.log();
+    }
+
+  };
 
   const handleRenderData = () => {
     let renderedContent;

@@ -66,10 +66,10 @@ const fetchCoords = (dispatch, treeData) => {
   return async address => {
     try {
       const response = await fetch(
-        'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=' + process.env.GOOGLE_MAPS_API
+        'https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + '.json?country=US&access_token=' + process.env.MAPBOX_API
       );
       const json = await response.json();
-      const newCoords = json.results[0].geometry.location;
+      const newCoords = json.features[0].center;
       const mile = 1.60934;
       const treesWithinAMile = findTreesWithinAMile(treeData, newCoords, mile);
       dispatch(filterData(treesWithinAMile));
