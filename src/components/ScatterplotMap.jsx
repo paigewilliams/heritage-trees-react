@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import MapGL from 'react-map-gl';
+import ReactMapGL from 'react-map-gl';
 import DeckGL, { ScatterplotLayer } from 'deck.gl';
 import { AppContext, selectData } from '../context/ContextProvider';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -28,7 +28,6 @@ const ScatterplotMap = ({ data }) => {
   const { dispatch, state } = useContext(AppContext);
   const { selectedData } = state;
   const [selectedId, setSelectedId] = useState(null);
-  // const [clickedFeature, setClickedFeature] = useState(null);
 
   useEffect(() => {
     if (selectedData.properties && selectedData.properties.OBJECTID !== selectedId) {
@@ -36,15 +35,6 @@ const ScatterplotMap = ({ data }) => {
     }
 
   }, [selectedData]);
-
-  // const renderPopUp = () => {
-  //   return clickedFeature && (
-  //     <div style={{ position: 'absolute', zIndex: 6, pointerEvents: 'none' }}>
-  //       {clickedFeature.properties.COMMON}
-  //     </div>
-  //   );
-
-  // };
 
   const renderLayers = () => {
     return ([
@@ -64,9 +54,6 @@ const ScatterplotMap = ({ data }) => {
         getRadius: () => 6,
         getFillColor: d => d.properties.OBJECTID === selectedId ? RED : GREEN,
         getLineColor: () => [0, 0, 0],
-        onClick: () => {
-          // setClickedFeature({ fetaure: object });
-        },
         onHover: ({ object }) => {
           if (object && object.properties.OBJECTID !== selectedId) {
             dispatch(selectData(object));
@@ -75,7 +62,6 @@ const ScatterplotMap = ({ data }) => {
             dispatch(selectData({}));
             setSelectedId(null);
           }
-
         },
         updateTriggers: {
           getFillColor: selectedId
@@ -90,15 +76,15 @@ const ScatterplotMap = ({ data }) => {
   return (
     <MapContainerStyle>
       <DeckGL width={width} height={height} initialViewState={initalViewport} layers={renderLayers()} controller={true}>
-        <MapGL
+        <ReactMapGL
           width='100%'
           height='70%'
           mapStyle='mapbox://styles/mapbox/light-v9'
           // eslint-disable-next-line no-undef
+          attributionControl={true}
           mapboxApiAccessToken={process.env.MAPBOX_API}
         >
-          {/* {renderPopUp()} */}
-        </MapGL>
+        </ReactMapGL>
       </DeckGL>
     </MapContainerStyle>
 

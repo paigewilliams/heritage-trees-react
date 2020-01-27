@@ -27,14 +27,27 @@ const GlobalStyles = createGlobalStyle`
 const AppStyles = styled.div`
   display: grid;
   height: 100vh;
-  grid-template-rows: 60% 5% 5% 30%;
+  grid-template-rows: 25% 40% 5% 30%;
 `;
 
 const FormContainer = styled.div`
-  background: whitesmoke;
-  opacity: 0.8;
   z-index: 2;
   display: flex;
+  flex-direction: column;
+  width: 33%;
+  
+  h2 {
+    background: whitesmoke;
+    padding: 1rem 0 1rem 1rem;
+    margin: 0;
+    opacity: 0.8;
+  }
+
+  div:not(:first-child) {
+    background: whitesmoke;
+    opacity: 0.8;
+  }
+  
 `;
 
 const TAB_LABELS = [
@@ -79,11 +92,14 @@ const App = () => {
     <Fragment>
       <GlobalStyles />
       <AppStyles>
-        {handleRenderData()}
         <FormContainer>
-          <AddressForm onFormSubmit={handleShowFilteredData} />
-          <LayerToggle onToggle={handleToggle} showAllData={showAllData} filteredTreeData={filteredTreeData} />
+          <div>
+            <h2>Portland's Heritage Trees</h2>
+            <AddressForm onFormSubmit={handleShowFilteredData} />
+            <LayerToggle onToggle={handleToggle} showAllData={showAllData} filteredTreeData={filteredTreeData} />
+          </div>
         </FormContainer>
+        {handleRenderData()}
         <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
         <BarChart data={treeData} selectedTab={selectedTab} />
       </AppStyles>

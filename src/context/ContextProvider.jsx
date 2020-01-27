@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useEffect, useMemo, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { findTreesWithinAMile } from '../utils';
 
 const REQUEST_DATA_SUCCESS = 'REQUEST_DATA_SUCCESS';
@@ -70,8 +71,7 @@ const fetchCoords = (dispatch, treeData) => {
       );
       const json = await response.json();
       const newCoords = json.features[0].center;
-      const mile = 1.60934;
-      const treesWithinAMile = findTreesWithinAMile(treeData, newCoords, mile);
+      const treesWithinAMile = findTreesWithinAMile(treeData, newCoords);
       dispatch(filterData(treesWithinAMile));
     }
     catch (error) {
@@ -96,6 +96,10 @@ const AppContextProvider = ({ children }) => {
       {children}
     </AppContext.Provider >
   );
+};
+
+AppContextProvider.propTypes = {
+  children: PropTypes.node
 };
 
 export default AppContextProvider;
