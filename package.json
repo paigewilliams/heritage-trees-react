@@ -1,15 +1,16 @@
 {
-  "name": "maps-react",
+  "name": "heritage-trees",
   "version": "1.0.0",
-  "description": "app to try google maps with react",
-  "main": "index.js",
+  "description": "app to display heritage trees",
+  "private": true,
   "scripts": {
     "test": "jest; exit 0",
     "start": "webpack-dev-server",
+    "build": "webpack",
     "lint": "eslint src/** src/**/**; exit 0",
     "lint-fix": "eslint src/** src/**/** --fix; exit 0"
   },
-  "author": "paige williams && tanvi garg",
+  "author": "Paige Williams",
   "license": "ISC",
   "dependencies": {
     "d3": "^5.12.0",
