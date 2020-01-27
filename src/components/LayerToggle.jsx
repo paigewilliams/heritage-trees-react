@@ -3,7 +3,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const LayerToggleContainter = styled.div`
-  position: relative;
+  padding-left: 1rem;
+  display: flex;
+  div {
+    position: relative;
+  }
+  h3 {
+    margin-top: 0;
+    padding-right: 1rem;
+  }
+  
 `;
 const LayerToggleLabel = styled.label`
   position: absolute;
@@ -44,26 +53,28 @@ const Toggle = styled.input`
     }
   }
 `;
-const LayerToggle = ({ onToggle, showAllData }) => {
+const LayerToggle = ({ onToggle, showAllData, filteredTreeData }) => {
   return (
-    <div>
+    <LayerToggleContainter>
       <h3>Show trees within a mile of address</h3>
-      <LayerToggleContainter>
+      <div>
         <Toggle
           id="checkbox"
           type="checkbox"
           checked={showAllData ? false : true}
           onChange={onToggle}
+          disabled={filteredTreeData.length ? false : true}
         />
         <LayerToggleLabel htmlFor="checkbox" />
-      </LayerToggleContainter>
-    </div>
+      </div>
+    </LayerToggleContainter>
   );
 };
 
 LayerToggle.propTypes = {
   onToggle: PropTypes.func.isRequired,
-  showAllData: PropTypes.bool.isRequired
+  showAllData: PropTypes.bool.isRequired,
+  filteredTreeData: PropTypes.array.isRequired
 };
 
 export default LayerToggle;

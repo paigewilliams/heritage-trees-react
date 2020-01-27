@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useEffect, useMemo, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { findTreesWithinAMile } from '../utils';
 
 const REQUEST_DATA_SUCCESS = 'REQUEST_DATA_SUCCESS';
@@ -11,14 +12,14 @@ export const selectData = data => ({ type: SELECTED_DATA, data });
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
-    case REQUEST_DATA_SUCCESS:
-      return { ...state, treeData: action.data };
-    case FILTER_DATA_SUCCESS:
-      return { ...state, filteredTreeData: action.data };
-    case SELECTED_DATA:
-      return { ...state, selectedData: action.data }
-    default:
-      return state;
+  case REQUEST_DATA_SUCCESS:
+    return { ...state, treeData: action.data };
+  case FILTER_DATA_SUCCESS:
+    return { ...state, filteredTreeData: action.data };
+  case SELECTED_DATA:
+    return { ...state, selectedData: action.data };
+  default:
+    return state;
   }
 };
 
@@ -26,12 +27,12 @@ const initialState = {
   treeData: [],
   filteredTreeData: [],
   selectedData: {}
-}
+};
 
 const logger = dispatch => action => {
   console.groupCollapsed('type:', action.type);
   return dispatch(action);
-}
+};
 
 const useReducerWithLogger = (...args) => {
   let prevState = useRef(initialState);
@@ -41,14 +42,14 @@ const useReducerWithLogger = (...args) => {
 
   useEffect(() => {
     if (state !== initialState) {
-      console.log("Previous state: ", prevState.current);
-      console.log("Next State: ", state);
+      console.log('Previous state: ', prevState.current);
+      console.log('Next State: ', state);
       console.groupEnd();
     }
     prevState.current = state;
   }, [state]);
   return [state, dispatchWithLogger];
-}
+};
 
 const fetchTreeData = async dispatch => {
   try {
@@ -66,18 +67,17 @@ const fetchCoords = (dispatch, treeData) => {
   return async address => {
     try {
       const response = await fetch(
-        'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=' + process.env.GOOGLE_MAPS_API
+        'https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + '.json?country=US&access_token=' + process.env.MAPBOX_API
       );
       const json = await response.json();
-      const newCoords = json.results[0].geometry.location;
-      const mile = 1.60934;
-      const treesWithinAMile = findTreesWithinAMile(treeData, newCoords, mile);
+      const newCoords = json.features[0].center;
+      const treesWithinAMile = findTreesWithinAMile(treeData, newCoords);
       dispatch(filterData(treesWithinAMile));
     }
     catch (error) {
       console.log('An error occorred', error);
     }
-  }
+  };
 };
 
 export const AppContext = createContext(initialState);
@@ -96,6 +96,10 @@ const AppContextProvider = ({ children }) => {
       {children}
     </AppContext.Provider >
   );
+};
+
+AppContextProvider.propTypes = {
+  children: PropTypes.node
 };
 
 export default AppContextProvider;
