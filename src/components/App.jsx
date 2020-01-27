@@ -56,14 +56,7 @@ const App = () => {
 
   const handleShowFilteredData = () => setShowAllData(false);
 
-  const handleSelectedTab = (tab) => {
-    if (tab.property !== 'SCIENTIFIC') {
-      setSelectedTab(tab);
-    } else {
-      console.log();
-    }
-
-  };
+  const handleSelectedTab = (tab) => setSelectedTab(tab);
 
   const handleRenderData = () => {
     let renderedContent;

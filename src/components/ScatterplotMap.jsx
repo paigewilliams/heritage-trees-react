@@ -54,6 +54,7 @@ const ScatterplotMap = ({ data }) => {
         pickable: true,
         opacity: 0.5,
         stroked: false,
+        highlightColor: [255, 99, 71],
         filled: true,
         radiusScale: 12,
         radiusMinPixels: 3,

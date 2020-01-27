@@ -11,14 +11,14 @@ export const selectData = data => ({ type: SELECTED_DATA, data });
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
-    case REQUEST_DATA_SUCCESS:
-      return { ...state, treeData: action.data };
-    case FILTER_DATA_SUCCESS:
-      return { ...state, filteredTreeData: action.data };
-    case SELECTED_DATA:
-      return { ...state, selectedData: action.data }
-    default:
-      return state;
+  case REQUEST_DATA_SUCCESS:
+    return { ...state, treeData: action.data };
+  case FILTER_DATA_SUCCESS:
+    return { ...state, filteredTreeData: action.data };
+  case SELECTED_DATA:
+    return { ...state, selectedData: action.data };
+  default:
+    return state;
   }
 };
 
@@ -26,12 +26,12 @@ const initialState = {
   treeData: [],
   filteredTreeData: [],
   selectedData: {}
-}
+};
 
 const logger = dispatch => action => {
   console.groupCollapsed('type:', action.type);
   return dispatch(action);
-}
+};
 
 const useReducerWithLogger = (...args) => {
   let prevState = useRef(initialState);
@@ -41,14 +41,14 @@ const useReducerWithLogger = (...args) => {
 
   useEffect(() => {
     if (state !== initialState) {
-      console.log("Previous state: ", prevState.current);
-      console.log("Next State: ", state);
+      console.log('Previous state: ', prevState.current);
+      console.log('Next State: ', state);
       console.groupEnd();
     }
     prevState.current = state;
   }, [state]);
   return [state, dispatchWithLogger];
-}
+};
 
 const fetchTreeData = async dispatch => {
   try {
@@ -77,7 +77,7 @@ const fetchCoords = (dispatch, treeData) => {
     catch (error) {
       console.log('An error occorred', error);
     }
-  }
+  };
 };
 
 export const AppContext = createContext(initialState);
