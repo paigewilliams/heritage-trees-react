@@ -41,9 +41,12 @@ const AddressForm = ({ onFormSubmit }) => {
 
   const handleNewAddressFormSubmission = (e) => {
     e.preventDefault();
-    const formattedAddress = encodeURI(_address.value);
-    fetchCoords(formattedAddress);
-    onFormSubmit();
+    if (_address.value.length) {
+      const formattedAddress = encodeURI(_address.value);
+      fetchCoords(formattedAddress);
+      onFormSubmit();
+    }
+
   };
 
   return (
