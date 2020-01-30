@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const TabStyle = styled.div`
-  z-index: 4;
   background: whitesmoke;
   opacity: 0.8;
   ul {
