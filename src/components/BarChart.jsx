@@ -18,8 +18,7 @@ const SVG = styled.svg`
 const ChartContainer = styled.div`
   background: whitesmoke;
   opacity: 0.9;
-  z-index: 3;
-  display: flex;
+    display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding: 1rem 1rem 1rem 3rem;

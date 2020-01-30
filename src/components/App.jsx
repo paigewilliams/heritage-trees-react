@@ -6,6 +6,7 @@ import BarChart from './BarChart';
 import AddressForm from './AddressForm';
 import LayerToggle from './LayerToggle';
 import Tabs from './Tabs';
+import Modal from './Modal';
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -27,28 +28,25 @@ const GlobalStyles = createGlobalStyle`
 const AppStyles = styled.div`
   display: grid;
   height: 100vh;
-  grid-template-rows: 25% 40% 5% 30%;
+  grid-template-rows: 25% 40% 8% 27%;
 `;
 
 const FormContainer = styled.div`
   z-index: 2;
   display: flex;
   flex-direction: column;
-  width: 33%;
-  
+  width: fit-content;
   h2 {
     background: whitesmoke;
     padding: 1rem 0 1rem 1rem;
     margin: 0;
-    opacity: 0.8;
   }
-
-  div:not(:first-child) {
-    background: whitesmoke;
-    opacity: 0.8;
-  }
-  
 `;
+
+const InnerContainer = styled.div`
+  background: whitesmoke;
+  opacity: 0.9;
+  `;
 
 const TAB_LABELS = [
   { property: 'HEIGHT', label: 'Height' },
@@ -93,15 +91,22 @@ const App = () => {
       <GlobalStyles />
       <AppStyles>
         <FormContainer>
-          <div>
+          <InnerContainer>
             <h2>Portland's Heritage Trees</h2>
             <AddressForm onFormSubmit={handleShowFilteredData} />
-            <LayerToggle onToggle={handleToggle} showAllData={showAllData} filteredTreeData={filteredTreeData} />
-          </div>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <LayerToggle onToggle={handleToggle} showAllData={showAllData} filteredTreeData={filteredTreeData} />
+              <Modal />
+            </div>
+          </InnerContainer>
         </FormContainer>
         {handleRenderData()}
+
+
         <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
         <BarChart data={treeData} selectedTab={selectedTab} />
+
+
       </AppStyles>
     </Fragment>
   );
