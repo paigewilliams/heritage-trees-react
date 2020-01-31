@@ -1,9 +1,7 @@
 # **Heritage Trees**
 
 # Contributors
-### Paige Williams  
-### Tanvi Garg
-### Scott Bergler (documentation)  
+### Paige Williams   
 
 ## Description
 A web application that lets users find Portland's heritage trees. By default the app shows all heritage trees. The user is able to enter their location to see trees within a mile radius. 
@@ -20,27 +18,24 @@ A web application that lets users find Portland's heritage trees. By default the
 * Navigate to the root directory of the project with `cd bike-transit-planner`
 * Create a `.env` file in the root of the directory
 * Generate a Mapbox access token
-* Save your access token as `API_KEY` in the `.env` file
+* Save your access token as `MAPBOX_API` in the `.env` file
 * Run `npm install` to install dependencies
 * Run `npm run start` to build and serve the project
 * View the project in any browser at `http://localhost:8080/`
 
 ## Technology Used <a name="Tech-used"></a>
 * React
-* Redux
 * Styled Components
-* Jest
-* Thunk
-* [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/tutorial)
+* MapBox
+* Deck.GL
+* D3
 
 ## Support and contact details
 
 Paige Williams: [paw145@humboldt.edu](mailto:paw145@humboldt.edu)
-Tanvi Garg: [tanvi.garg23@gmail.com](mailto:tanvi.garg23@gmail.com)
-Scott Bergler: [commandinghands@gmail.com](mailto:commandinghands@gmail.com)
 
 ## License <a name="mit-lic"></a>
 
 This software is licensed under the MIT license.
 
-Copyright (c) 2018 Paige Williams, Tanvi Garg, Scott Bergler
+Copyright (c) 2018 Paige Williams
