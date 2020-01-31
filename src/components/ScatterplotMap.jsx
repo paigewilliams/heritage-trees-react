@@ -11,6 +11,8 @@ const MapContainerStyle = styled.div`
   height: 100%;
 `;
 
+const width = '100%';
+const height = '100%';
 const RED = [255, 99, 71];
 const GREEN = [91, 150, 91];
 
@@ -70,17 +72,13 @@ const ScatterplotMap = ({ data }) => {
     ]);
   };
 
-  const width = '100%';
-  const height = '100%';
-
   return (
     <MapContainerStyle>
       <DeckGL width={width} height={height} initialViewState={initalViewport} layers={renderLayers()} controller={true}>
         <ReactMapGL
-          width='100%'
-          height='70%'
+          width={width}
+          height={height}
           mapStyle='mapbox://styles/mapbox/light-v9'
-          // eslint-disable-next-line no-undef
           attributionControl={true}
           mapboxApiAccessToken={process.env.MAPBOX_API}
         >

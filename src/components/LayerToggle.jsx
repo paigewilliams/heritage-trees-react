@@ -53,6 +53,7 @@ const Toggle = styled.input`
     }
   }
 `;
+
 const LayerToggle = ({ onToggle, showAllData, filteredTreeData }) => {
   return (
     <LayerToggleContainter>

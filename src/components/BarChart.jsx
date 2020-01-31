@@ -18,8 +18,7 @@ const SVG = styled.svg`
 const ChartContainer = styled.div`
   background: whitesmoke;
   opacity: 0.9;
-  z-index: 3;
-  display: flex;
+    display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding: 1rem 1rem 1rem 3rem;
@@ -45,8 +44,8 @@ const useResizeObserver = ref => {
   return dimensions;
 };
 
-const BarChart = React.memo(({ data, selectedTab }) => {
-  const ref = useRef();
+const BarChart = (({ data, selectedTab }) => {
+  const svgRef = useRef();
   const containerRef = useRef();
   const dimensions = useResizeObserver(containerRef);
   const { dispatch, state } = useContext(AppContext);
@@ -54,16 +53,15 @@ const BarChart = React.memo(({ data, selectedTab }) => {
   const { selectedData } = state;
 
   useMemo(() => {
-    const svg = d3.select(ref.current);
+    const svg = d3.select(svgRef.current);
     if (!dimensions) return;
 
     const treeValue = Object.keys(data).map(id => data[id].properties[selectedTab.property]);
 
     const maxValue = d3.max(treeValue);
 
-    const handleClick = tree => {
+    const handleHover = tree =>
       tree !== selectedData && dispatch(selectData(tree));
-    };
 
     const handleColor = (d) =>
       selectedData.properties && d.properties.OBJECTID === selectedData.properties.OBJECTID ? 'tomato' : '#5B965B';
@@ -94,7 +92,7 @@ const BarChart = React.memo(({ data, selectedTab }) => {
       .join('rect')
       .attr('class', 'bar')
       .style('transform', 'scale(1, -1)')
-      .on('mouseenter', (d) => handleClick(d))
+      .on('mouseenter', (d) => handleHover(d))
       .on('mouseover', () => d3.select(event.currentTarget).style('fill', '#ff6347'))
       .on('mouseout', () => d3.select(event.currentTarget).style('fill', '#5B965B'))
       .transition()
@@ -109,7 +107,7 @@ const BarChart = React.memo(({ data, selectedTab }) => {
   return (
     <ChartContainer ref={containerRef}>
       <div>
-        <SVG ref={ref}>
+        <SVG ref={svgRef}>
           <g className="x-axis" />
           <g className="y-axis" />
         </SVG>
