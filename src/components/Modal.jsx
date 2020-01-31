@@ -45,12 +45,13 @@ const Modal = () => {
               <button onClick={() => setIsOpen(false)}>X</button>
               <h4>About the Heritage Trees</h4>
               <p>Heritage Trees are trees that have been formally recognized by City Council for their unique size, age, historical or horticultural significance. Once accepted by Council, Heritage Trees are designated with a small plaque so they can be identified by the public and listed in the Heritage Tree database.</p>
+              <p>For mor information about the Heritage trees, vist the <a href='https://www.portlandoregon.gov/parks/40280'> City of Portland site.</a></p>
             </div>
           </OuterModal>
         )
 
       }
-    </Root>
+    </Root >
 
 
 

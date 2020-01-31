@@ -77,10 +77,9 @@ const ScatterplotMap = ({ data }) => {
     <MapContainerStyle>
       <DeckGL width={width} height={height} initialViewState={initalViewport} layers={renderLayers()} controller={true}>
         <ReactMapGL
-          width='100%'
-          height='70%'
+          width={width}
+          height={height}
           mapStyle='mapbox://styles/mapbox/light-v9'
-          // eslint-disable-next-line no-undef
           attributionControl={true}
           mapboxApiAccessToken={process.env.MAPBOX_API}
         >

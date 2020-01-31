@@ -46,7 +46,7 @@ const FormContainer = styled.div`
 const InnerContainer = styled.div`
   background: whitesmoke;
   opacity: 0.9;
-  `;
+`;
 
 const TAB_LABELS = [
   { property: 'HEIGHT', label: 'Height' },
@@ -101,12 +101,8 @@ const App = () => {
           </InnerContainer>
         </FormContainer>
         {handleRenderData()}
-
-
         <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
         <BarChart data={treeData} selectedTab={selectedTab} />
-
-
       </AppStyles>
     </Fragment>
   );

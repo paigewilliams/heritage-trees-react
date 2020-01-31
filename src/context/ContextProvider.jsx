@@ -1,15 +1,25 @@
+/* eslint-disable no-console */
 import React, { createContext, useReducer, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { findTreesWithinAMile } from '../utils';
 
+const initialState = {
+  treeData: [],
+  filteredTreeData: [],
+  selectedData: {}
+};
+
+// constants
 const REQUEST_DATA_SUCCESS = 'REQUEST_DATA_SUCCESS';
 const FILTER_DATA_SUCCESS = 'FILTER_DATA_SUCCESS';
 const SELECTED_DATA = 'SELECTED_DATA';
 
+// actions
 export const fetchData = data => ({ type: REQUEST_DATA_SUCCESS, data });
 export const filterData = data => ({ type: FILTER_DATA_SUCCESS, data });
 export const selectData = data => ({ type: SELECTED_DATA, data });
 
+// reducer
 const reducer = (state = {}, action) => {
   switch (action.type) {
   case REQUEST_DATA_SUCCESS:
@@ -23,18 +33,12 @@ const reducer = (state = {}, action) => {
   }
 };
 
-const initialState = {
-  treeData: [],
-  filteredTreeData: [],
-  selectedData: {}
-};
-
 const logger = dispatch => action => {
   console.groupCollapsed('type:', action.type);
   return dispatch(action);
 };
 
-const useReducerWithLogger = (...args) => {
+const useReducerWithLogger = () => {
   let prevState = useRef(initialState);
   const [state, dispatch] = useReducer(reducer, initialState);
 
