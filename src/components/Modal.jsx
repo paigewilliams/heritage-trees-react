@@ -28,6 +28,16 @@ const OuterModal = styled.div`
     transform: translate(-50%, -50%);
     z-index: 5;
   }
+  h4{
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0;
+    letter-spacing: 0.1em;
+  }
+  p{
+    color: #333333;
+  }
   a {
     color: tomato;
     text-decoration: none;
@@ -48,7 +58,7 @@ const Modal = () => {
             <button onClick={() => setIsOpen(false)}>X</button>
             <h4>About the Heritage Trees</h4>
             <p>Heritage Trees are trees that have been formally recognized by City Council for their unique size, age, historical or horticultural significance. Once accepted by Council, Heritage Trees are designated with a small plaque so they can be identified by the public and listed in the Heritage Tree database.</p>
-            <p>For more information about the Heritage trees, vist the <a href='https://www.portlandoregon.gov/parks/40280'> City of Portland.</a></p>
+            <p>For more information about the Heritage trees, vist the <a title="City of Portland" href='https://www.portlandoregon.gov/parks/40280'> City of Portland.</a></p>
           </div>
         </OuterModal>
       )}
