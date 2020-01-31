@@ -30,6 +30,8 @@ A web application that lets users find Portland's heritage trees. By default the
 * Deck.GL
 * D3
 
+Info Icon from [Icons8](https://icons8.com/)
+
 ## Support and contact details
 
 Paige Williams: [paw145@humboldt.edu](mailto:paw145@humboldt.edu)

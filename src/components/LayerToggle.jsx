@@ -8,9 +8,10 @@ const LayerToggleContainter = styled.div`
   div {
     position: relative;
   }
-  h3 {
+  h4 {
     margin-top: 0;
     padding-right: 1rem;
+    font-weight: normal;
   }
   
 `;
@@ -57,7 +58,7 @@ const Toggle = styled.input`
 const LayerToggle = ({ onToggle, showAllData, filteredTreeData }) => {
   return (
     <LayerToggleContainter>
-      <h3>Show trees within a mile of address</h3>
+      <h4>Filter trees</h4>
       <div>
         <Toggle
           id="checkbox"

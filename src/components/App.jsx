@@ -36,10 +36,15 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: fit-content;
-  h2 {
-    background: whitesmoke;
+  h1 {
     padding: 1rem 0 1rem 1rem;
     margin: 0;
+    font-weight: lighter;
+  }
+  h3 {
+    padding 0 1rem 1rem;
+    margin: 0;
+    font-weight: normal;
   }
 `;
 
@@ -92,7 +97,8 @@ const App = () => {
       <AppStyles>
         <FormContainer>
           <InnerContainer>
-            <h2>Portland's Heritage Trees</h2>
+            <h1>Portland's Heritage Trees</h1>
+            <h3>Find trees within a mile of an address</h3>
             <AddressForm onFormSubmit={handleShowFilteredData} />
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <LayerToggle onToggle={handleToggle} showAllData={showAllData} filteredTreeData={filteredTreeData} />
