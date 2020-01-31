@@ -11,6 +11,8 @@ const MapContainerStyle = styled.div`
   height: 100%;
 `;
 
+const width = '100%';
+const height = '100%';
 const RED = [255, 99, 71];
 const GREEN = [91, 150, 91];
 
@@ -69,9 +71,6 @@ const ScatterplotMap = ({ data }) => {
       })
     ]);
   };
-
-  const width = '100%';
-  const height = '100%';
 
   return (
     <MapContainerStyle>
