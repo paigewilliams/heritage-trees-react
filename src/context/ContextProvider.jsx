@@ -38,11 +38,11 @@ const logger = dispatch => action => {
   return dispatch(action);
 };
 
-const useReducerWithLogger = () => {
+const useReducerWithLogger = (reducer, initialState) => {
   let prevState = useRef(initialState);
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const dispatchWithLogger = useMemo(() => logger(dispatch), [dispatch]);
+  const dispatchWithLogger = useMemo(() => logger(dispatch), []);
 
   useEffect(() => {
     if (state !== initialState) {
