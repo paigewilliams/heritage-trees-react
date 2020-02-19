@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { findTreesWithinAMile } from '../utils';
 
 const initialState = {
-  treeData: [],
+  mapTreeData: [],
+  chartTreeData: [],
   filteredTreeData: [],
   selectedData: {}
 };
@@ -23,7 +24,7 @@ export const selectData = data => ({ type: SELECTED_DATA, data });
 const reducer = (state = {}, action) => {
   switch (action.type) {
   case REQUEST_DATA_SUCCESS:
-    return { ...state, treeData: action.data };
+    return { ...state, mapTreeData: action.data, chartTreeData: action.data };
   case FILTER_DATA_SUCCESS:
     return { ...state, filteredTreeData: action.data };
   case SELECTED_DATA:
@@ -95,7 +96,7 @@ const AppContextProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ state, dispatch, fetchCoords: fetchCoords(dispatch, state.treeData) }}
+      value={{ state, dispatch, fetchCoords: fetchCoords(dispatch, state.mapTreeData) }}
     >
       {children}
     </AppContext.Provider >

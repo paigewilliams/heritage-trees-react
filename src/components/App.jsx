@@ -61,7 +61,7 @@ const TAB_LABELS = [
 const App = () => {
   const [showAllData, setShowAllData] = useState(true);
   const { state } = useContext(AppContext);
-  const { treeData, filteredTreeData } = state;
+  const { mapTreeData, filteredTreeData, chartTreeData } = state;
   const [selectedTab, setSelectedTab] = useState({ property: 'HEIGHT', label: 'Height' });
 
   const handleToggle = event => {
@@ -76,16 +76,16 @@ const App = () => {
 
   const handleRenderData = () => {
     let renderedContent;
-    if (Object.entries(treeData).length !== 0) {
+    if (Object.entries(mapTreeData).length !== 0) {
       if (showAllData === true) {
-        renderedContent = <ScatterplotMap data={treeData} />;
+        renderedContent = <ScatterplotMap data={mapTreeData} />;
       } else if (
         (Object.entries(filteredTreeData).length !== 0) &
         (showAllData === false)
       ) {
         renderedContent = <ScatterplotMap data={filteredTreeData} />;
       } else {
-        renderedContent = <ScatterplotMap data={treeData} />;
+        renderedContent = <ScatterplotMap data={mapTreeData} />;
       }
     }
     return renderedContent;
@@ -108,7 +108,7 @@ const App = () => {
         </FormContainer>
         {handleRenderData()}
         <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
-        <BarChart data={treeData} selectedTab={selectedTab} />
+        <BarChart data={chartTreeData} selectedTab={selectedTab} />
       </AppStyles>
     </Fragment>
   );
