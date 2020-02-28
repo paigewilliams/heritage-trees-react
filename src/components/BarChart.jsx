@@ -55,8 +55,7 @@ const BarChart = (({ data, selectedTab }) => {
   useMemo(() => {
     const svg = d3.select(svgRef.current);
     if (!dimensions) return;
-
-    const treeValue = Object.keys(data).map(id => data[id].properties[selectedTab.property]);
+    const treeValue = Object.keys(data).map(id => selectedTab.type === 'total' ? data[id].properties[selectedTab.property] : data[id].count);
 
     const maxValue = d3.max(treeValue);
 
@@ -100,7 +99,7 @@ const BarChart = (({ data, selectedTab }) => {
       .attr('x', (d, i) => xScale(i))
       .attr('y', () => -dimensions.height)
       .attr('width', xScale.bandwidth())
-      .attr('height', d => dimensions.height - yScale(d.properties[selectedTab.property]))
+      .attr('height', d => dimensions.height - yScale(selectedTab.type === 'total' ? d.properties[selectedTab.property] : d.count))
       .style('fill', (d) => handleColor(d));
   }, [data, selectedTab, selectedData, dimensions]);
 

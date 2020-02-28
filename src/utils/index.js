@@ -19,10 +19,15 @@ const mathForTreesWithinAMile = (checkTree, centerPoint) => {
 export const countOccuranceByKey = (array, key) => count(array, item => item.properties[key.property]);
 
 const count = (array, key) => {
-  const obj = array.reduce((counter, tree) => {
+  const aggregate = array.reduce((counter, tree) => {
     const prop = key(tree);
     counter[prop] = counter.hasOwnProperty(prop) ? counter[prop] + 1 : 1;
     return counter;
   }, {});
-  return obj;
+
+  const arrayOfType = Object.keys(aggregate).map((key) => {
+    const value = aggregate[key];
+    return { name: key, count: value };
+  });
+  return arrayOfType;
 };  
