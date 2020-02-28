@@ -1,12 +1,13 @@
 import React, { useContext, useState, Fragment } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { AppContext } from '../context/ContextProvider';
+import { AppContext, filterDataByKey } from '../context/ContextProvider';
 import ScatterplotMap from './ScatterplotMap';
 import BarChart from './BarChart';
 import AddressForm from './AddressForm';
 import LayerToggle from './LayerToggle';
 import Tabs from './Tabs';
 import Modal from './Modal';
+import { countOccuranceByKey } from '../utils';
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -54,15 +55,16 @@ const InnerContainer = styled.div`
 `;
 
 const TAB_LABELS = [
-  { property: 'HEIGHT', label: 'Height' },
-  { property: 'CIRCUMF', label: 'Circumference' },
+  { property: 'HEIGHT', label: 'Height', type: 'total' },
+  { property: 'CIRCUMF', label: 'Circumference', type: 'total' },
+  { property: 'COMMON', label: 'Species', type: 'aggregate' }
 ];
 
 const App = () => {
   const [showAllData, setShowAllData] = useState(true);
-  const { state } = useContext(AppContext);
-  const { mapTreeData, filteredTreeData, chartTreeData } = state;
-  const [selectedTab, setSelectedTab] = useState({ property: 'HEIGHT', label: 'Height' });
+  const { state, dispatch } = useContext(AppContext);
+  const { totalTreeData, filteredTreeData, aggregateTreeData } = state;
+  const [selectedTab, setSelectedTab] = useState({ property: 'HEIGHT', label: 'Height', type: 'total' });
 
   const handleToggle = event => {
     event.target.checked === true
@@ -72,20 +74,26 @@ const App = () => {
 
   const handleShowFilteredData = () => setShowAllData(false);
 
-  const handleSelectedTab = (tab) => setSelectedTab(tab);
+  const handleSelectedTab = tab => {
+    if (tab.type === 'aggregate') {
+      const occuranceByKey = countOccuranceByKey(totalTreeData, tab);
+      dispatch(filterDataByKey(occuranceByKey));
+    }
+    setSelectedTab(tab);
+  };
 
   const handleRenderData = () => {
     let renderedContent;
-    if (Object.entries(mapTreeData).length !== 0) {
+    if (Object.entries(totalTreeData).length !== 0) {
       if (showAllData === true) {
-        renderedContent = <ScatterplotMap data={mapTreeData} />;
+        renderedContent = <ScatterplotMap data={totalTreeData} />;
       } else if (
         (Object.entries(filteredTreeData).length !== 0) &
         (showAllData === false)
       ) {
         renderedContent = <ScatterplotMap data={filteredTreeData} />;
       } else {
-        renderedContent = <ScatterplotMap data={mapTreeData} />;
+        renderedContent = <ScatterplotMap data={totalTreeData} />;
       }
     }
     return renderedContent;
@@ -108,7 +116,7 @@ const App = () => {
         </FormContainer>
         {handleRenderData()}
         <Tabs selectedTab={selectedTab} onClick={handleSelectedTab} labels={TAB_LABELS} />
-        <BarChart data={chartTreeData} selectedTab={selectedTab} />
+        <BarChart data={selectedTab.type === 'total' ? totalTreeData : aggregateTreeData} selectedTab={selectedTab} />
       </AppStyles>
     </Fragment>
   );

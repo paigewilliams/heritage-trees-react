@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { findTreesWithinAMile } from '../utils';
 
 const initialState = {
-  mapTreeData: [],
-  chartTreeData: [],
+  totalTreeData: [],
+  aggregateTreeData: [],
   filteredTreeData: [],
   selectedData: {}
 };
@@ -13,20 +13,24 @@ const initialState = {
 // constants
 const REQUEST_DATA_SUCCESS = 'REQUEST_DATA_SUCCESS';
 const FILTER_DATA_SUCCESS = 'FILTER_DATA_SUCCESS';
+const FILTER_DATA_BY_KEY = 'FILTER_DATA_BY_KEY';
 const SELECTED_DATA = 'SELECTED_DATA';
 
 // actions
 export const fetchData = data => ({ type: REQUEST_DATA_SUCCESS, data });
 export const filterData = data => ({ type: FILTER_DATA_SUCCESS, data });
 export const selectData = data => ({ type: SELECTED_DATA, data });
+export const filterDataByKey = data => ({ type: FILTER_DATA_BY_KEY, data });
 
 // reducer
 const reducer = (state = {}, action) => {
   switch (action.type) {
   case REQUEST_DATA_SUCCESS:
-    return { ...state, mapTreeData: action.data, chartTreeData: action.data };
+    return { ...state, totalTreeData: action.data };
   case FILTER_DATA_SUCCESS:
     return { ...state, filteredTreeData: action.data };
+  case FILTER_DATA_BY_KEY:
+    return { ...state, aggregateTreeData: action.data };
   case SELECTED_DATA:
     return { ...state, selectedData: action.data };
   default:
@@ -96,7 +100,7 @@ const AppContextProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ state, dispatch, fetchCoords: fetchCoords(dispatch, state.mapTreeData) }}
+      value={{ state, dispatch, fetchCoords: fetchCoords(dispatch, state.totalTreeData) }}
     >
       {children}
     </AppContext.Provider >

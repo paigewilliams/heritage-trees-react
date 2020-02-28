@@ -15,3 +15,14 @@ const mathForTreesWithinAMile = (checkTree, centerPoint) => {
   const dy = Math.abs(centerPoint[1] - checkTree.lat) * ky;
   return Math.sqrt(dx * dx + dy * dy) <= mile;
 };
+
+export const countOccuranceByKey = (array, key) => count(array, item => item.properties[key.property]);
+
+const count = (array, key) => {
+  const obj = array.reduce((counter, tree) => {
+    const prop = key(tree);
+    counter[prop] = counter.hasOwnProperty(prop) ? counter[prop] + 1 : 1;
+    return counter;
+  }, {});
+  return obj;
+};  
