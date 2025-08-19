@@ -1,24 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import App from './components/App';
 import AppContextProvider from './context/ContextProvider';
 
-const render = Component => {
-  ReactDOM.render(
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
+
+root.render(
+  <StrictMode>
     <AppContextProvider>
-      <Component />
+      <App />
     </AppContextProvider>
-    ,
-    document.getElementById('react-app-root')
-  );
-};
 
-render(App);
+  </StrictMode>,
+);
 
-/*eslint-disable */
-if (module.hot) {
-  module.hot.accept('./components/App', () => {
-    render(App);
-  });
-}
-/*eslint-enable */
+

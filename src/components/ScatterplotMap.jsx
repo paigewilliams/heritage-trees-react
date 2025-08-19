@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ReactMapGL from 'react-map-gl';
+import Map from 'react-map-gl/maplibre';
 import DeckGL, { ScatterplotLayer } from 'deck.gl';
 import { AppContext, selectData } from '../context/ContextProvider';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 const MapContainerStyle = styled.div`
   width: 100%;
@@ -118,15 +118,13 @@ const ScatterplotMap = ({ data }) => {
   return (
     <MapContainerStyle>
       <DeckGL width={width} height={height} initialViewState={initalViewport} layers={renderLayers()} controller={true}>
-        <ReactMapGL
+        <Map
           width={width}
           height={height}
-          mapStyle='mapbox://styles/mapbox/light-v9'
+          mapStyle={`https://api.maptiler.com/maps/landscape/style.json?key=${process.env.MAPTILER_API}`
+          }
           attributionControl={true}
-          mapboxApiAccessToken={process.env.MAPBOX_API}
-        >
-          )}
-        </ReactMapGL>
+        />
         {renderTooltip()}
       </DeckGL>
     </MapContainerStyle >
