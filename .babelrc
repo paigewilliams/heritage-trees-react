@@ -1,22 +1,10 @@
 {
-  "env": {
-    "development": {
-      "plugins": [
-        "transform-es2015-modules-commonjs"
-      ]
-    },
-    "test": {
-      "plugins": [
-        "transform-es2015-modules-commonjs"
-      ]
-    }
-  },
-  "plugins": [
+  "presets": [
+    "@babel/preset-env",
     [
-      "transform-runtime",
+      "@babel/preset-react",
       {
-        "polyfill": false,
-        "regenerator": true
+        "runtime": "automatic"
       }
     ]
   ]

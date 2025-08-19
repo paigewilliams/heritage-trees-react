@@ -1,35 +1,13 @@
+const path = require('path');
 const webpack = require('webpack');
-const { resolve } = require('path');
 const Dotenv = require('dotenv-webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-
-  entry: [
-    'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/only-dev-server',
-    resolve(__dirname, 'src', 'index.jsx')
-  ],
-
-  output: {
-    filename: 'app.bundle.js',
-    path: resolve(__dirname, 'build'),
-    publicPath: '/'
-  },
-
-  resolve: {
-    extensions: ['.js', '.jsx']
-  },
-
-  devtool: '#source-map',
-
-  devServer: {
-    hot: true,
-    contentBase: resolve(__dirname, 'build'),
-    publicPath: '/'
-  },
-
+  mode: isDevelopment ? 'development' : 'production',
+  entry: path.resolve(__dirname, './src/index.jsx'),
   module: {
     rules: [
       {
@@ -37,28 +15,16 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.jsx?$/,
-        enforce: 'pre',
-        loader: 'eslint-loader',
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        options: {
-          emitWarning: true,
-          configFile: './.eslintrc.json'
-        }
-      },
-      {
-        test: /\.jsx?$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        options: {
-          presets: [
-            ['es2015', { 'modules': false }],
-            'react', 'stage-0'
-          ],
-          plugins: [
-            'react-hot-loader/babel'
-          ]
-        }
+        use: [
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+            },
+          },
+        ],
       },
       {
         test: /\.(png|gif|jp(e*)g|svg)$/,
@@ -72,18 +38,18 @@ module.exports = {
       }
     ],
   },
-
-  plugins: [
-    new Dotenv({
-      systemvars: true
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new HtmlWebpackPlugin({
-      template: 'template.ejs',
-      appMountId: 'react-app-root',
-      title: 'Portland Heritage Trees',
-      filename: resolve(__dirname, 'build', 'index.html'),
-    }),
-  ]
+  resolve: {
+    extensions: ['.*', '.js', '.jsx'],
+  },
+  output: {
+    path: path.resolve(__dirname, './build'),
+    filename: 'bundle.js',
+  },
+  plugins: [new Dotenv({
+    systemvars: true
+  }), isDevelopment && new ReactRefreshWebpackPlugin()],
+  devServer: {
+    static: path.resolve(__dirname, './build'),
+    hot: true,
+  },
 };

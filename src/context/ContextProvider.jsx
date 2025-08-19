@@ -22,14 +22,14 @@ export const selectData = data => ({ type: SELECTED_DATA, data });
 // reducer
 const reducer = (state = {}, action) => {
   switch (action.type) {
-  case REQUEST_DATA_SUCCESS:
-    return { ...state, treeData: action.data };
-  case FILTER_DATA_SUCCESS:
-    return { ...state, filteredTreeData: action.data };
-  case SELECTED_DATA:
-    return { ...state, selectedData: action.data };
-  default:
-    return state;
+    case REQUEST_DATA_SUCCESS:
+      return { ...state, treeData: action.data };
+    case FILTER_DATA_SUCCESS:
+      return { ...state, filteredTreeData: action.data };
+    case SELECTED_DATA:
+      return { ...state, selectedData: action.data };
+    default:
+      return state;
   }
 };
 
@@ -57,7 +57,7 @@ const useReducerWithLogger = () => {
 
 const fetchTreeData = async dispatch => {
   try {
-    const response = await fetch('https://opendata.arcgis.com/datasets/fd1d618ac3174ad5be730524a4dd778e_26.geojson');
+    const response = await fetch('https://www.portlandmaps.com/od/rest/services/COP_OpenData_Environment/MapServer/26/query?outFields=*&where=1%3D1&f=geojson');
     const json = await response.json();
     const data = json.features;
     dispatch(fetchData(data));
